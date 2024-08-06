@@ -13,5 +13,9 @@ db = client.week0_team4
 def home():
    return render_template('index.html')
 
+@app.route('/qna/<id>')
+def go_user_tetail(id):
+   return render_template('detail.html')
+
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
