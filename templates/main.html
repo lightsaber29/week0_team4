@@ -24,6 +24,29 @@
     href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
   <!-- JavaScript -->
+  <script>
+    function log_in() {
+      let user_id = $('#login_id').val();
+      let user_pw = $('#login_pw').val();
+      $.ajax({
+        type: "POST",
+        url: "/login",
+        data: { ID: user_id, PW: user_pw },
+        success: function (response) {
+          if (response["result"] == 'success') {
+            // alert('로그인 성공!');
+            //토큰을 쿠키에 저장
+            //페이지 이동(토큰을 같이 보냄)
+            //token 추가시 hide/show 
+          } else {
+            alert('로그인 실패. 아이디 또는 비밀번호를 확인하세요.')
+          }
+        }
+      })
+      $('#ID').val("");
+      $('#PW').val("");
+    }
+  </script>
 
 </head>
 
@@ -38,29 +61,32 @@
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
           </div>
-          <div class="modal-body login_form">
-            <div class="form-group">
-              <label for="login_id">ID</label>
-              <input type="text" class="form-control one_line" id="login_id" placeholder="아이디를 입력하세요">
+          <form>
+            <div class="modal-body login_form">
+              <div class="form-group">
+                <label for="login_id">ID</label>
+                <input type="text" class="form-control one_line" id="login_id"
+                  placeholder="아이디를 입력하세요">
 
+              </div>
+              <div class="form-group">
+                <label for="login_pw">PW</label>
+                <input type="password" class="form-control one_line" id="login_pw"
+                  placeholder="패스워드를 입력하세요">
+              </div>
             </div>
-            <div class="form-group">
-              <label for="login_pw">PW</label>
-              <input type="password" class="form-control one_line" id="login_pw" placeholder="패스워드를 입력하세요">
+            <div class="modal-footer">
+              <button onclick="log_in()" type="button" class="btn btn-warning">확인</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
             </div>
+          </form>
 
-
-          </div>
-          <div class="modal-footer">
-            <button onclick="" type="button" class="btn btn-warning">확인</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="login_after">
-    'ㅇㅇ님' 안녕하세요!
+    '{{ name }}님' 안녕하세요!
     <button type="button" class="btn btn-warning">내정보</button>
     <button type="button" class="btn btn-primary">친구찾기</button>
   </div>
