@@ -6,13 +6,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-mongodb_url = os.environ.get(MONGODB_URL)
+mongodb_url = os.environ.get('MONGODB_URL')
 
 import requests
 from bs4 import BeautifulSoup
 
 from pymongo import MongoClient
-client = MongoClient('mongodb_url')
+client = MongoClient(mongodb_url)
 db = client.week0_team4
 
 
