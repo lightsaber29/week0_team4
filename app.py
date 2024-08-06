@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:jungle@cluster0.yrie6f6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+client = MongoClient('')
 db = client.week0_team4
 
 ## HTML을 주는 부분
