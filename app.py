@@ -1,12 +1,20 @@
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+mongodb_url = os.environ.get('MONGODB_URL')
+
 import requests
 from bs4 import BeautifulSoup
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://sparta:jungle@cluster0.yrie6f6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+client = MongoClient('mongodb_url')
 db = client.week0_team4
+
 
 ## HTML을 주는 부분
 @app.route('/')
