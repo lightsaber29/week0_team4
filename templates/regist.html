@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 
+<!-- 타이틀 bold, 크기, padding -->
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -26,38 +28,42 @@
 </head>
 
 <body>
-    <span>
-        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="static/img/no_user.jpg" alt="...">
-    </span>
-    <button type="button" class="btn btn-primary">사진 등록하기</button>
+    <div class="profile-format">
+        <div class="profile-img">
+            <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="static/img/no_user.jpg" alt="...">
+            <button type="button" class="btn btn-primary">사진 등록하기</button>
+        </div>
 
-    <div>
-        <label for="user_id">ID</label>
-        <input class="form-control is-invalid" id="user_id" type="text" placeholder="아이디를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
-        <div class="invalid-feedback" data-sb-feedback="name:required">ID는 필수값입니다.</div>
-    </div>
+        <div class="profile-data">
+            <div>
+                <label for="user_id">ID</label>
+                <input class="form-control is-invalid" id="user_id" type="text" placeholder="아이디를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
+                <div class="invalid-feedback" data-sb-feedback="name:required">ID는 필수값입니다.</div>
+            </div>
 
-    <div>
-        <label for="user_pw">PW</label>
-        <input class="form-control is-invalid" id="user_pw" type="text" placeholder="비밀번호를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
-        <div class="invalid-feedback" data-sb-feedback="name:required">PW는 필수값입니다.</div>
-    </div>
+            <div>
+                <label for="user_pw">PW</label>
+                <input class="form-control is-invalid" id="user_pw" type="text" placeholder="비밀번호를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
+                <div class="invalid-feedback" data-sb-feedback="name:required">PW는 필수값입니다.</div>
+            </div>
 
-    <div>
-        <label for="ckeck_user_pw">PW 확인</label>
-        <input class="form-control is-invalid" id="ckeck_user_pw" type="text" placeholder="비밀번호를 확인 해 주세요." data-sb-validations="required" data-sb-can-submit="no">
-        <div class="invalid-feedback" data-sb-feedback="name:required">동일한 비밀번호를 입력해주세요.</div>
-    </div>
+            <div>
+                <label for="ckeck_user_pw">PW 확인</label>
+                <input class="form-control is-invalid" id="ckeck_user_pw" type="text" placeholder="비밀번호를 확인 해 주세요." data-sb-validations="required" data-sb-can-submit="no">
+                <div class="invalid-feedback" data-sb-feedback="name:required">동일한 비밀번호를 입력해주세요.</div>
+            </div>
 
-    <div>
-        <label for="name">이름</label>
-        <input class="form-control is-invalid" id="name" type="text" placeholder="이름을 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
-        <div class="invalid-feedback" data-sb-feedback="name:required">이름은 필수값입니다.</div>
+            <div>
+                <label for="name">이름</label>
+                <input class="form-control is-invalid" id="name" type="text" placeholder="이름을 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
+                <div class="invalid-feedback" data-sb-feedback="name:required">이름은 필수값입니다.</div>
+            </div>
+        </div>
     </div>
 
     <!-- 필수질문 -->
-    <div>
-        <label for="">성별</label>
+    <div class="question-item">
+        <h5>성별</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="gender" id="male" checked>
             <label class="form-check-label" for="male">
@@ -73,37 +79,38 @@
         <div class="invalid-feedback" data-sb-feedback="name:required">성별은 필수값입니다.</div>
     </div>
 
-    <div>
-        MBTI
+    <div class="question-item">
+        <h5>MBTI</h5>
         <div>
             <input type="radio" class="btn-check" name="mbti1" id="mbti_e" autocomplete="off">
-            <label class="btn btn-secondary" for="mbti_e">E</label>
+            <label class="btn" for="mbti_e">E</label>
 
             <input type="radio" class="btn-check" name="mbti2" id="mbti_s" autocomplete="off">
-            <label class="btn btn-secondary" for="mbti_s">S</label>
+            <label class="btn" for="mbti_s">S</label>
 
             <input type="radio" class="btn-check" name="mbti3" id="mbti_t" autocomplete="off">
-            <label class="btn btn-secondary" for="mbti_t">T</label>
+            <label class="btn" for="mbti_t">T</label>
 
             <input type="radio" class="btn-check" name="mbti4" id="mbti_p" autocomplete="off">
-            <label class="btn btn-secondary" for="mbti_p">P</label>
+            <label class="btn" for="mbti_p">P</label>
         </div>
         <div>
             <input type="radio" class="btn-check" name="mbti1" id="mbti_i" autocomplete="off">
-            <label class="btn btn-secondary" for="mbti_i">I</label>
+            <label class="btn" for="mbti_i">I</label>
 
             <input type="radio" class="btn-check" name="mbti2" id="mbti_n" autocomplete="off">
-            <label class="btn btn-secondary" for="mbti_n">N</label>
+            <label class="btn" for="mbti_n">N</label>
 
             <input type="radio" class="btn-check" name="mbti3" id="mbti_f" autocomplete="off">
-            <label class="btn btn-secondary" for="mbti_f">F</label>
+            <label class="btn" for="mbti_f">F</label>
 
             <input type="radio" class="btn-check" name="mbti4" id="mbti_j" autocomplete="off">
-            <label class="btn btn-secondary" for="mbti_j">J</label>
+            <label class="btn" for="mbti_j">J</label>
         </div>
     </div>
-    <div>
-        취미
+
+    <div class="question-item">
+        <h5>취미</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="hobby" id="hobby_game" checked>
             <label class="form-check-label" for="hobby_game">
@@ -130,8 +137,9 @@
           </div>
         <div class="invalid-feedback" data-sb-feedback="hobby:required">취미는 필수값입니다.</div>
     </div>
-    <div>
-        나이대
+
+    <div class="question-item">
+        <h5>나이대 (만 나이)</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="age" id="age1" checked>
             <label class="form-check-label" for="hobby_game">
@@ -158,8 +166,9 @@
           </div>
         <div class="invalid-feedback" data-sb-feedback="age:required">나이는 필수값입니다.</div>
     </div>
-    <div>
-        밥은
+
+    <div class="question-item">
+        <h5>밥은</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="meal" id="meal_school" checked>
             <label class="form-check-label" for="meal_school">
@@ -174,8 +183,9 @@
           </div>
         <div class="invalid-feedback" data-sb-feedback="meal:required">좋아하는 식사 스타일은 필수값입니다.</div>
     </div>
-    <div>
-        운동 스타일
+
+    <div class="question-item">
+        <h5>운동 스타일</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="exercise" id="exercise_running" checked>
             <label class="form-check-label" for="exercise_running">
@@ -208,8 +218,9 @@
         </div>
         <div class="invalid-feedback" data-sb-feedback="exercise:required">좋아하는 운동 스타일은 필수값입니다.</div>
     </div>
-    <div>
-        사용하는 노트북 제조사
+
+    <div class="question-item">
+        <h5>사용하는 노트북 제조사</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="laptop" id="laptop_samsumg" checked>
             <label class="form-check-label" for="laptop_samsumg">
@@ -236,8 +247,9 @@
         </div>
         <div class="invalid-feedback" data-sb-feedback="laptop:required">노트북 값은 필수값입니다.</div>
     </div>
-    <div>
-        커피 취향
+
+    <div class="question-item">
+        <h5>커피 취향</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="coffee" id="coffee_americano" checked>
             <label class="form-check-label" for="coffee_americano">
@@ -276,8 +288,9 @@
         </div>
         <div class="invalid-feedback" data-sb-feedback="coffee:required">커피 취향은 필수값입니다.</div>
     </div>
-    <div>
-        아침식사
+
+    <div class="question-item">
+        <h5>아침식사</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="breakfast" id="breakfast_y" checked>
             <label class="form-check-label" for="breakfast_y">
@@ -292,8 +305,9 @@
         </div>
         <div class="invalid-feedback" data-sb-feedback="breakfast:required">아침식사 값은 필수값입니다.</div>
     </div>
-    <div>
-        주량
+
+    <div class="question-item">
+        <h5>주량</h5>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="drink" id="drink1" checked>
             <label class="form-check-label" for="drink1">
@@ -321,12 +335,67 @@
         <div class="invalid-feedback" data-sb-feedback="drink:required">주량은 필수값입니다.</div>
     </div>
 
-    <button type="button" class="btn btn-primary">가입하기</button>
-    <button type="button" class="btn btn-dark">취소</button>
+    <!-- 개인정보 동의 -->
+    <div class="card agree-card">
+        <p class="h5">개인정보 수집 및 이용에 동의해주세요.</p>
+        1. 수집 목적 : 서비스 이용<br>
+        2. 수집 항목 : 이름, 성별<br>
+        3. 보유 및 이용기간 : 탈퇴 시 삭제<br>
+    </div>
+    <div class="form-check question-item">
+        <input class="form-check-input" type="checkbox" value="" id="agree">
+        <label class="form-check-label" for="agree">
+            개인정보 제공에 동의합니다
+        </label>
+    </div>
+
+    <div class="button-bottom">
+        <button type="button" class="btn btn-primary">가입하기</button>
+        <button type="button" class="btn btn-dark">취소</button>
+    </div>
 </body>
 
 <style>
+.profile-format {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    justify-content: center;
+}
 
+.profile-img .img {
+    max-width: 290px;
+    max-height: 290px;
+}
+
+.profile-img button {
+    display: block !important;
+    margin: 0 auto;
+}
+
+.profile-data {
+    width: 50%
+}
+
+.question-item {
+    margin-bottom: 20px;
+}
+
+.button-bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.button-bottom button {
+    margin-left: 10px;
+    margin-bottom: 30px;
+}
+
+.agree-card {
+    padding: 5px;
+}
 
 </style>
 
