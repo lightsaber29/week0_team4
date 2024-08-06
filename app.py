@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-mongodb_url = os.environ.get('MONGODB_URL')
+mongodb_url = os.environ.get(MONGODB_URL)
 
 import requests
 from bs4 import BeautifulSoup
