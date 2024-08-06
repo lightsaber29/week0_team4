@@ -4,3 +4,7 @@ body {
     width: 900px;
     height: 100vh;
 }
+
+textarea {
+    resize: none !important;
+}
