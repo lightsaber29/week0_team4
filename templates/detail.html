@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel='stylesheet' type='text/css' media='screen' href='bootstrapPratice.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+    <style>
+        .profile-format {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid lightgray;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+
+        .profile-data {
+            width: 50%
+        }
+
+        .profile-img>img {
+            max-width: 290px;
+            max-height: 290px;
+        }
+
+        .profile-data>ul>li {
+            list-style: none;
+            height: 51px;
+        }
+
+        .profile-data>ul>li>p {
+            width: 50%;
+        }
+
+        .content-div {
+            position: relative;
+        }
+
+        .q-list {}
+
+        .card {
+            margin-bottom: 10px;
+        }
+
+        .q-write-wrap {
+            overflow: auto;
+            position: -webkit-sticky;
+            position: sticky;
+            display: flex;
+            gap: 10px;
+            bottom: 0px;
+            background: white;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="content-div">
+            <div class="jungler">
+                <div class="profile-format">
+                    <div class="profile-img">
+                        <img src="{{ url_for('static', filename='img/no_user.jpg') }}" class="img-thumbnail" alt="">
+                    </div>
+                    <div class="profile-data">
+                        <ul class="list-group list-group-numbered">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>이름은? </p>
+                                <p>최민재</p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>성별은? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>생일은? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>MBTIi는? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>취미는? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>나이대는? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>학식파? 외식파?<span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>운동은? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>노트북? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>커피취향? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>코딩경력? <span></span></p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <p>주량은? <span></span></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="q-list">
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body.
+                    </div>
+                </div>
+            </div>
+            <div class="q-write-wrap">
+                <!-- <textarea name="" id=""></textarea> -->
+                <textarea class="form-control" aria-label="With textarea"></textarea>
+                <div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="익명" id="익명">
+                        <label class="form-check-label" for="익명">익명으로</label>
+                    </div>
+                    <button type="button" class="btn btn-outline-success">질문하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

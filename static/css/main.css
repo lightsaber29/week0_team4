@@ -1,0 +1,10 @@
+body {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 900px;
+    height: 100vh;
+}
+
+textarea {
+    resize: none !important;
+}
