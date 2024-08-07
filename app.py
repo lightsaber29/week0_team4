@@ -100,6 +100,60 @@ def listing():
     
    return jsonify({'result':'success', 'users':all_users})
 
+@app.route('/friends')
+def find_friends():
+   return render_template('friends.html')
+
+@app.route('/friends', methods=['POST'])
+def show_friends():
+   gender = request.form['gender']
+   mbti1 = request.form['mbti1']
+   mbti2 = request.form['mbti2']
+   mbti3 = request.form['mbti3']
+   mbti4 = request.form['mbti4']
+   hobby = request.form['hobby']
+   age = request.form['age']
+   meal = request.form['meal']
+   exercise = request.form['exercise']
+   laptop = request.form['laptop']
+   coffee = request.form['coffee']
+   breakfast = request.form['breakfast']
+   drink = request.form['drink']
+
+   condition = {}
+   if gender and gender != '':
+      condition['gender'] = gender
+   if mbti1 and mbti1 != '':
+      condition['mbti1'] = mbti1
+   if mbti2 and mbti2 != '':
+      condition['mbti2'] = mbti2   
+   if mbti3 and mbti3 != '':
+      condition['mbti3'] = mbti3   
+   if mbti4 and mbti4 != '':
+      condition['mbti4'] = mbti4
+   if hobby and hobby != '':
+      condition['hobby'] = hobby
+   if age and age != '':
+      condition['age'] = age
+   if meal and meal != '':
+      condition['meal'] = meal
+   if exercise and exercise != '':
+      condition['exercise'] = exercise
+   if laptop and laptop != '':
+      condition['laptop'] = laptop
+   if coffee and coffee != '':
+      condition['coffee'] = coffee
+   if breakfast and breakfast != '':
+      condition['breakfast'] = breakfast
+   if drink and drink != '':
+      condition['drink'] = drink
+   
+   friends = list(db.user.find(condition))
+   friends = convert_user_list(friends)
+
+
+   return jsonify({'result':'success', 'friends':friends})
+
 
 
 @app.route('/login', methods=['POST'])

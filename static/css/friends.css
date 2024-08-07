@@ -12,7 +12,28 @@
     font-size:80px;
     text-align: center;
 }
-.form-select {
-    width:600px;
+
+.container {
+    width: 900px;
     margin:0 auto;
+    padding : 50px 20px;
 }
+
+.question-item {
+    border:3px solid green;
+    border-radius: 10px;
+    padding:10px 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+
+}
+
+.find_btn {
+    text-align: right;
+}
+
+.form-check {
+    display: inline-block;
+    margin-right: 18px;
+}
+

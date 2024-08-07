@@ -17,6 +17,7 @@
 
   <!-- css파일 연결 -->
   <link rel="stylesheet" href="../static/css/main2.css">
+  <link rel="stylesheet" href="../static/css/main.css">
   <!-- font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +40,7 @@
       $.ajax({
         type: "POST",
         url: "/login",
-        data: { ID: user_id, PW: user_pw },
+        data: { 'ID': user_id, 'PW': user_pw },
         success: function (response, status, xhr) {
           if (response["result"] == 'success') {
             window.location.href = '/login'
@@ -70,9 +71,12 @@
     }
 
     function update() {
-      window.location.href = ""
+      window.location.href = "/"
     }
 
+    function find_friends() {
+      window.location.href = "/friends"
+    }
 
 
     function make_card({ _id, url, name, mbti1, mbti2, mbti3, mbti4, age, gender }) {
