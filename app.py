@@ -57,32 +57,79 @@ def convert_user_list(all_users):
 ## HTML을 주는 부분
 @app.route('/')
 def home():
+   jwt = convert_cookie_2_jwt(request.cookies)
+   name = ''
+   if jwt:
+      name = jwt['name']
+   
    all_users = list(db.user.find({}))
    all_users = convert_user_list(all_users)
-   return render_template('main.html',users=all_users)
+   return render_template('main.html',users=all_users, name=name)
 
-@app.route('/qna/<id>')
+@app.route('/qna/<id>', methods=['GET'])
 def go_user_tetail(id):
-   print('qna in')
    jwt = convert_cookie_2_jwt(request.cookies)
-   print(jwt)
    if jwt is None:
        return unauthorized_response()
    
    me = jwt.copy()
    detail_user = db.user.find_one({'_id': ObjectId(id)})
+   detail_user['_id'] = str(detail_user['_id'])
 
-   print(detail_user)
+   print('user_id', detail_user['user_id'])
 
    if 'user_id' not in detail_user:
       all_users = list(db.user.find({}))
       all_users = convert_user_list(all_users)
       return render_template('main.html', msg='아직 참여하지 않은 정글러입니다.',users=all_users)
    
-   print(detail_user)
    questions = list(db.question.find({'a_user':detail_user['user_id']}))
+   print('question len', len(questions))
+   for q in questions: q['_id'] = str(q['_id'])
    
    return render_template('detail.html', me=me, detail_user=detail_user, questions=questions)
+
+@app.route('/qna/<q_id>', methods=['DELETE'])
+def delete_qna(q_id):
+
+   q = db.question.find_one({'_id':ObjectId(q_id)})
+   if 'answer' in q:
+      return jsonify({'result':'answered'})
+
+   db.question.delete_one({'_id':ObjectId(q_id)})
+   return jsonify({'result':'success'})
+
+@app.route('/qna/<q_id>', methods=['PUT'])
+def modify_qna(q_id):
+   question = request.form['question']
+
+   q = db.question.find_one({'_id':ObjectId(q_id)})
+   if 'answer' in q :
+      return jsonify({'result':'answered'})
+   
+   db.question.update_one({'_id':ObjectId(q_id)}, {'$set':{'question': question}})
+   return jsonify({'result':'success'})
+
+@app.route('/qna/answer/<q_id>',methods=['POST'])
+def regist_answer(q_id):
+   q = db.question.find_one({'_id':ObjectId(q_id)})
+
+   if q == None:
+      return jsonify({'result':'none'})
+   
+   answer = request.form['answer']
+   db.question.update_one({'_id':ObjectId(q_id)}, {'$set':{'answer': answer}})
+   return jsonify({'result':'success'})
+
+@app.route('/qna/answer/<q_id>',methods=['PUT'])
+def modify_answer(q_id):
+   answer = request.form['answer']
+   if answer == '':
+      db.question.update_one({'_id':ObjectId(q_id)}, {'$unset':{'answer': ''}})
+   else :
+      db.question.update_one({'_id':ObjectId(q_id)}, {'$set':{'answer': answer}})
+   return jsonify({'result':'success'})
+
 
 @app.errorhandler(401)
 def unathentication(error):

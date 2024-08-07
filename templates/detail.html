@@ -41,8 +41,12 @@
             height: 51px;
         }
 
-        .profile-data>ul>li>p {
-            width: 50%;
+        .profile-data>ul>li>p:nth-child(1) {
+            width: 40%;
+        }
+
+        .profile-data>ul>li>p:nth-child(2) {
+            width: 60%;
         }
 
         .content-div {
@@ -71,10 +75,97 @@
         }
 
         .card-body input.form-control {
-            width: 88%;
+            width: 77%;
             display: inline-block;
         }
+
+        footer {
+            height: 35px;
+            width: 100%;
+        }
+
+        .card-body h5.card-title>span {
+            font-size: 13px;
+        }
+
+        .q-modify {
+            display: none;
+        }
     </style>
+    <script>
+        function show_modify(id) {
+            $(`.q-modify.${id}`).show()
+            $(`.q-view.${id}`).hide()
+        }
+
+        function delete_modify(id) {
+            if (!confirm('질문을 삭제하시겠습니까?')) {
+                return
+            }
+
+            $.ajax({
+                url: `/qna/${id}`,
+                method: 'DELETE',
+                success: (response) => {
+                    if (response.result === 'answered') {
+                        alert('답변이 달린 질문입니다.')
+                    }
+                    const _id = '{{ detail_user._id }}'
+                    window.location.href = `/qna/${_id}`
+                }
+            })
+        }
+
+        function form_modify(id) {
+            const question = $(`.q-modify.${id}>input`).val()
+            if (!question) {
+                alert('질문은 빈칸 일 수 없습니다.')
+                return;
+            }
+
+            $.ajax({
+                url: `/qna/${id}`,
+                data: { question },
+                method: 'PUT',
+                success: (response) => {
+                    if (response.result === 'answered') {
+                        alert('답변이 달린 질문입니다.')
+                    }
+                    const _id = '{{ detail_user._id }}'
+                    window.location.href = `/qna/${_id}`
+                }
+            })
+        }
+
+        function hide_modify(id) {
+            $(`.q-modify.${id}`).hide()
+            $(`.q-view.${id}`).show()
+        }
+
+        function modify_answer(q_id) {
+            $.ajax({
+                url: `/qna/answer/${q_id}`,
+                method: 'PUT',
+                data: { answer: $(`.answer.${q_id}`).val() },
+                success: (response) => {
+                    window.location.href = '/qna/{{ detail_user._id}}'
+                }
+            })
+        }
+        function create_answer(q_id) {
+            $.ajax({
+                url: `/qna/answer/${q_id}`,
+                method: 'POST',
+                data: { answer: $(`.answer.${q_id}`).val() },
+                success: (response) => {
+                    if (response.result === 'none') {
+                        alert('삭제된 질문입니다.')
+                    }
+                    window.location.href = '/qna/{{ detail_user._id}}'
+                }
+            })
+        }
+    </script>
 </head>
 
 <body>
@@ -231,51 +322,79 @@
                 </div>
             </div>
             <div class="q-list">
-                <!-- 답변자도 아니고 질문한 사람도 아닐때 -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            This is Question
-                        </h5>
-                        This is some text within a card body.
-                    </div>
-                </div>
+                {% for question in questions %}
                 <!-- 답변자일 때 -->
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            This is Question
+                            {{ question.question }}
+                            <span class="badge text-bg-secondary">{{ '익명' if question.anonymous == 'Y' else
+                                question.q_name}}</span>
                         </h5>
-                        <p>This is some text within a card body.<button type="button"
-                                class="btn btn-outline-success">답변수정</button></p>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control answer {{ question._id }}"
+                                value="{{ question.answer }}">
                             <label for="floatingInput">답변</label>
-                            <button type="button" class="btn btn-success">답변수정</button>
+                            {% if 'answer' in question%}
+                            <button type="button" class="btn btn-success"
+                                onclick="modify_answer('{{ question._id }}')">답변수정</button>
+                            {% else %}
+                            <button type="button" class="btn btn-success"
+                                onclick="create_answer('{{ question._id }}')">답변달기</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
+                {% if question.q_user == me.user_id and question.a_user != me.user_id %}
                 <!-- 질문자일때 -->
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            This is Question
+                        <h5 class="card-title q-view {{ question._id }}">
+                            {{ question.question }}
+                            <span class="badge text-bg-secondary">{{ '익명' if
+                                question.anonymous == 'Y' else
+                                question.q_name}}</span>
                             <!-- 답변이 있으면 안뜸 -->
-                            <button type="button" class="btn btn-outline-success">질문수정</button>
-                            <button type="button" class="btn btn-outline-danger">질문삭제</button>
+                            {% if 'answer' not in question %}
+                            <button type="button" class="btn btn-outline-success q-view {{ question._id }}"
+                                onclick="show_modify('{{ question._id }}')">질문수정</button>
+                            <button type="button" class="btn btn-outline-danger q-view {{ question._id }}"
+                                onclick="delete_modify('{{ question._id }}')">질문삭제</button>
+                            {% endif %}
                         </h5>
                         <!-- 질문 수정 시 -->
-                        <p>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="">
+                        <div class="form-floating mb-3 q-modify {{ question._id }}">
+                            <input type="text" class="form-control" id="floatingInput"
+                                placeholder="{{ question.question }}" value="{{ question.question }}">
                             <label for="floatingInput">질문</label>
-                            <button type="button" class="btn btn-success">질문수정</button>
+                            <button type="button" class="btn btn-success"
+                                onclick="form_modify('{{ question._id }}')">질문수정</button>
+                            <button type="button" class="btn btn-danger"
+                                onclick="hide_modify('{{ question._id }}')">수정취소</button>
                         </div>
-                        </p>
-                        <p>This is some text within a card body.</p>
+                        <p>{{ question.answer }}</p>
                     </div>
                 </div>
+                {% elif question.a_user == me.user_id and question.q_user != me.user_id %}
+                {% else %}
+                <!-- 답변자도 아니고 질문한 사람도 아닐때 -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ question.question }}
+                            <h6><span class="badge text-bg-secondary">{{ '익명' if question.anonymous == 'Y' else
+                                    question.q_name}}</span></h6>
+                        </h5>
+                        <p>{{ question.answer }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+
+
+
+                {% if detail_user.user_id != me.user_id %}
                 <!-- 답변자는 보이지 않음 -->
                 <div class="q-write-wrap">
                     <textarea class="form-control" aria-label="With textarea"></textarea>
@@ -287,9 +406,11 @@
                         <button type="button" class="btn btn-success">질문하기</button>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
+    <footer></footer>
 </body>
 
 </html>
