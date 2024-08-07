@@ -15,37 +15,46 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script></body>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+        crossorigin="anonymous"></script>
+    </body>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 
     <!-- custom -->
-    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="../static/css/main.css">
 
     <title>정글북 Jun9le-book</title>
 </head>
 
 <body>
+    {% include 'header.html' %}
     <div class="profile-format">
         <div class="profile-img">
             <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="static/img/no_user.jpg" alt="...">
-            <button type="button" class="btn btn-primary">사진 등록하기</button>
+            <button type="button" class="btn btn-primary" onclick="click_file()">사진 등록하기</button>
+            <input type="file" id="img_file" onchange="convert_file()" style="visibility: hidden;">
         </div>
 
         <div class="profile-data">
             <div class="input_user_id">
                 <label for="user_id">ID</label>
-                <input class="form-control" id="user_id" type="text" value="{{ user.user_id }}" data-sb-validations="required" data-sb-can-submit="no" disabled>
+                <input class="form-control" id="user_id" type="text" value="{{ user.user_id }}"
+                    data-sb-validations="required" data-sb-can-submit="no" disabled>
             </div>
 
             <div class="input_user_pw">
                 <label for="user_pw">PW</label>
                 <div style="display: flex;">
                     <!-- <input class="form-control" id="user_pw" type="password" data-sb-validations="required" data-sb-can-submit="no" disabled> -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_password">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#modal_password">
                         비밀번호 변경
                     </button>
                 </div>
@@ -53,7 +62,8 @@
 
             <div class="input_name">
                 <label for="name">이름</label>
-                <input class="form-control" id="name" type="text" placeholder="이름을 입력하세요." value="{{ user.name }}" data-sb-validations="required" data-sb-can-submit="no" disabled>
+                <input class="form-control" id="name" type="text" placeholder="이름을 입력하세요." value="{{ user.name }}"
+                    data-sb-validations="required" data-sb-can-submit="no" disabled>
                 <div class="invalid-feedback" data-sb-feedback="name:required">이름은 필수값입니다.</div>
             </div>
         </div>
@@ -114,31 +124,31 @@
             <label class="form-check-label" for="hobby_game">
                 게임
             </label>
-          </div>
-          <div class="form-check">
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="hobby" id="hobby_webtoon" value="webtoon">
             <label class="form-check-label" for="hobby_webtoon">
                 웹툰
             </label>
-          </div>
-          <div class="form-check">
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="hobby" id="hobby_exercise" value="exercise">
             <label class="form-check-label" for="hobby_exercise">
                 운동
             </label>
-          </div>
-          <div class="form-check">
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="hobby" id="hobby_play" value="play">
             <label class="form-check-label" for="hobby_play">
                 악기연주
             </label>
-          </div>
-          <div class="form-check">
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="hobby" id="hobby_etc" value="etc">
             <label class="form-check-label" for="hobby_etc">
                 기타
             </label>
-          </div>
+        </div>
         <div class="invalid-feedback" data-sb-feedback="hobby:required">취미는 필수값입니다.</div>
     </div>
 
@@ -149,25 +159,25 @@
             <label class="form-check-label" for="hobby_game">
                 20대 초반 ( ~ 23세)
             </label>
-          </div>
-          <div class="form-check">
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="age" id="age2" value="24~26">
             <label class="form-check-label" for="age2">
                 20대 중반 (24 ~ 26)
             </label>
-          </div>
-          <div class="form-check">
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="age" id="age3" value="27~29">
             <label class="form-check-label" for="age3">
                 20대 후반 (27 ~ 29)
             </label>
-          </div>
-          <div class="form-check">
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="age" id="age4" value="30~">
             <label class="form-check-label" for="age4">
                 30대
             </label>
-          </div>
+        </div>
         <div class="invalid-feedback" data-sb-feedback="age:required">나이는 필수값입니다.</div>
     </div>
 
@@ -178,13 +188,13 @@
             <label class="form-check-label" for="meal_school">
                 학식이 좋아요
             </label>
-          </div>
-          <div class="form-check">
+        </div>
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="meal" id="meal_goout" value="goout">
             <label class="form-check-label" for="meal_goout">
                 외식이 좋아요
             </label>
-          </div>
+        </div>
         <div class="invalid-feedback" data-sb-feedback="meal:required">좋아하는 식사 스타일은 필수값입니다.</div>
     </div>
 
@@ -341,7 +351,7 @@
 
     <div class="button-bottom">
         <button type="button" class="btn btn-primary" onclick="validation()">수정하기</button>
-        <button type="button" class="btn btn-dark">취소</button>
+        <button type="button" class="btn btn-dark" onclick="window.history.back()">취소</button>
     </div>
 
     <!-- 비밀번호 변경 modal -->
@@ -355,17 +365,20 @@
                 <div class="modal-body">
                     <div class="input_past_user_pw">
                         <label for="past_user_pw">현재 비밀번호</label>
-                        <input class="form-control" id="past_user_pw" type="password" placeholder="비밀번호를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
+                        <input class="form-control" id="past_user_pw" type="password" placeholder="비밀번호를 입력하세요."
+                            data-sb-validations="required" data-sb-can-submit="no">
                         <div class="invalid-feedback" data-sb-feedback="name:required">현재 비밀번호는 필수값입니다.</div>
                     </div>
                     <div class="input_new_user_pw">
                         <label for="new_user_pw">새 비밀번호</label>
-                        <input class="form-control" id="new_user_pw" type="password" placeholder="비밀번호를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
+                        <input class="form-control" id="new_user_pw" type="password" placeholder="비밀번호를 입력하세요."
+                            data-sb-validations="required" data-sb-can-submit="no">
                         <div class="invalid-feedback" data-sb-feedback="name:required">새 비밀번호는 필수값입니다.</div>
                     </div>
                     <div class="input_ckeck_new_user_pw">
                         <label for="ckeck_new_user_pw">새 비밀번호 확인</label>
-                        <input class="form-control" id="ckeck_new_user_pw" type="password" placeholder="비밀번호를 확인 해 주세요." data-sb-validations="required" data-sb-can-submit="no">
+                        <input class="form-control" id="ckeck_new_user_pw" type="password" placeholder="비밀번호를 확인 해 주세요."
+                            data-sb-validations="required" data-sb-can-submit="no">
                         <div class="invalid-feedback" data-sb-feedback="name:required">새 비밀번호와 동일한 비밀번호를 입력해주세요.</div>
                     </div>
                 </div>
@@ -380,7 +393,7 @@
 </body>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         init()
         // 새로고침 시 스크롤 상단 이동 처리
         $("html, body").animate({ scrollTop: 0 })
@@ -404,6 +417,7 @@
         $('[name="coffee"][value="{{ user.coffee }}"]').prop('checked', true)
         $('[name="breakfast"][value="{{ user.breakfast }}"]').prop('checked', true)
         $('[name="drink"][value="{{ user.drink }}"]').prop('checked', true)
+        $('.profile-img img').attr('src', '{{ user.img }}')
 
     }
 
@@ -508,6 +522,7 @@
         const coffee = $('input:radio[name="coffee"]:checked').val()
         const breakfast = $('input:radio[name="breakfast"]:checked').val()
         const drink = Number($('input:radio[name="drink"]:checked').val())
+        const img = $('.profile-img img').attr('src')
 
         const form = {
             user_id: user_id,
@@ -524,21 +539,22 @@
             laptop: laptop,
             coffee: coffee,
             breakfast: breakfast,
-            drink: drink
+            drink: drink,
+            img
         }
 
         console.log('form result: ', form)
 
         $.ajax({
             type: 'POST',
-            url:  '/api/update-user',
+            url: '/api/update-user',
             data: form,
             success: function (response) {
                 let msg = response['msg'];
                 alert(msg);
                 // 수정 후 새로고침
                 //TODO 수정 후 상세 페이지로 이동하게끔 변경 - 파라미터 뭐 필요한지 확인하기
-                location.reload()
+                location.href = '/qna/{{ user._id }}'
             }
         });
     }
@@ -582,18 +598,19 @@
             alert('입력하신 비밀번호가 일치하지 않습니다.')
             $('.input_ckeck_new_user_pw div').addClass('d-block')
             $('.input_ckeck_new_user_pw input').addClass('is-invalid')
+            return
         } else {
             $('.input_ckeck_new_user_pw div').removeClass('d-block')
             $('.input_ckeck_new_user_pw input').removeClass('is-invalid')
         }
-        
+
         updatePassword(past_user_pw, new_user_pw)
     }
 
     function updatePassword(past_user_pw, new_user_pw) {
         $.ajax({
             type: 'POST',
-            url:  '/api/update-password',
+            url: '/api/update-password',
             data: {
                 past_user_pw,
                 new_user_pw
@@ -619,53 +636,84 @@
     }
 
     function log_out() {
-      window.location.href = "/main/logout"
+        window.location.href = "/main/logout"
+    }
+
+    function click_file() {
+        $('#img_file').click()
+    }
+
+    function convert_file() {
+        const $input = $('#img_file')
+        const file = $input[0].files[0]
+        const extension = file.name.substring(file.name.lastIndexOf('.') + 1)
+
+        if (!['jpg', 'png', 'jpeg', 'gif'].includes(extension.toLowerCase())) {
+            alert('.jpg, .png, .jpeg, .gif 파일만 선택가능합니다.')
+            $input.val('')
+            return
+        }
+
+        if (file.size > 10 * 1024 * 1024) {
+            alert('10MB 이하의 파일만 업로드 가능합니다.')
+            $input.val('')
+            return
+        }
+
+        const reader = new FileReader()
+        let readed = ''
+
+        reader.onload = (event) => {
+            $('.profile-img img').attr('src', event.target.result)
+            console.log(event.target.result)
+            $input.val('')
+        }
+        reader.readAsDataURL(file)
     }
 
 </script>
 
 <style>
-.profile-format {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    padding-bottom: 15px;
-    margin-bottom: 10px;
-    justify-content: center;
-}
+    .profile-format {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        padding-bottom: 15px;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
 
-.profile-img .img {
-    max-width: 290px;
-    max-height: 290px;
-}
+    .profile-img img {
+        max-width: 290px;
+        max-height: 290px;
+    }
 
-.profile-img button {
-    display: block !important;
-    margin: 0 auto;
-}
+    .profile-img button {
+        display: block !important;
+        margin: 0 auto;
+    }
 
-.profile-data {
-    width: 50%
-}
+    .profile-data {
+        width: 50%
+    }
 
-.question-item {
-    margin-bottom: 20px;
-}
+    .question-item {
+        margin-bottom: 20px;
+    }
 
-.button-bottom {
-    display: flex;
-    justify-content: center;
-}
+    .button-bottom {
+        display: flex;
+        justify-content: center;
+    }
 
-.button-bottom button {
-    margin-left: 10px;
-    margin-bottom: 30px;
-}
+    .button-bottom button {
+        margin-left: 10px;
+        margin-bottom: 30px;
+    }
 
-.agree-card {
-    padding: 5px;
-}
-
+    .agree-card {
+        padding: 5px;
+    }
 </style>
 
 </html>

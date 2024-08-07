@@ -8,3 +8,36 @@ body {
 textarea {
     resize: none !important;
 }
+.logo {
+    width:500px;
+    margin: 0 auto 50px;
+    height:100px;
+    color:green;
+    font-size:80px;
+    text-align: center;
+}
+
+*{
+    font-family: "Jua", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.kanit-semibold {
+    font-family: "Kanit", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+
+
+
+.login_before, .login_after{
+    width: 900px;
+    margin: 0 auto;
+    text-align: right;
+}
+
+.btn {
+    margin:10px 5px;
+}

@@ -28,8 +28,7 @@ db = client.week0_team4
 
 def convert_user_list(all_users):
    for user in all_users:
-      if 'url' not in user:
-         user['url'] = '../static/img/no_user.jpg'
+      user['url'] = '../static/img/no_user.jpg' if 'img' not in user else user['img']
       
       user['mbti'] = ''
       if 'mbti1' in user:
@@ -103,7 +102,7 @@ def go_user_tetail(id):
    print('question len', len(questions))
    for q in questions: q['_id'] = str(q['_id'])
    
-   return render_template('detail.html', me=me, detail_user=detail_user, questions=questions)
+   return render_template('detail.html', me=me, detail_user=detail_user, questions=questions, name=jwt['name'])
 
 @app.route('/qna/<q_id>', methods=['DELETE'])
 def delete_qna(q_id):
@@ -181,7 +180,10 @@ def listing():
 
 @app.route('/friends')
 def find_friends():
-   return render_template('friends.html')
+   jwt = convert_cookie_2_jwt(request.cookies)
+   if jwt is None:
+      return unauthorized_response()
+   return render_template('friends.html', name=jwt['name'])
 
 @app.route('/friends', methods=['POST'])
 def show_friends():
@@ -323,7 +325,8 @@ def regist_user():
          "laptop": new_user.get('laptop'),
          "coffee": new_user.get('coffee'),
          "breakfast": new_user.get('breakfast'),
-         "drink": int(new_user.get('drink'))
+         "drink": int(new_user.get('drink')),
+         "img": new_user.get('img')
       }
       db.user.update_one(target, { '$set' : value })
 
@@ -343,10 +346,11 @@ def update():
    
    user_id = jwt['user_id']
    # 해당 유저 정보를 조회하고
-   user = db.user.find_one({'user_id':user_id}, {'_id':False})
+   user = db.user.find_one({'user_id':user_id})
+   user['_id'] = str(user['_id'])
 
    # 조회한 정보 보내주기
-   return render_template('update.html', user=user)
+   return render_template('update.html', user=user, name=jwt['name'])
 
 @app.route('/api/update-user', methods=['POST'])
 def update_user():
@@ -367,7 +371,8 @@ def update_user():
       "laptop": new_user.get('laptop'),
       "coffee": new_user.get('coffee'),
       "breakfast": new_user.get('breakfast'),
-      "drink": int(new_user.get('drink'))
+      "drink": int(new_user.get('drink')),
+      "img": new_user.get('img')
    }
 
    db.user.update_one(target, { '$set' : value })

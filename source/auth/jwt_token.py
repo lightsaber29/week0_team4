@@ -9,6 +9,7 @@ SECRET_KEY = os.environ.get('SECRET_PRE')
 
 def create_token(user):
     del user['user_pw']
+    del user['img']
     user['exp'] = datetime.utcnow() + timedelta(hours=24)
     # additional_claims는 payload에 추가적으로 넣을 정보들
     #  토큰을 만들때 id를 기준으로 만듬
