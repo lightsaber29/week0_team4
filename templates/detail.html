@@ -344,11 +344,11 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>주량은?</p>
-                                {% if detail_user.drink == '0' %}
+                                {% if detail_user.drink == 0 %}
                                 <p class="btn btn-secondary">반 병 이하</p>
-                                {% elif detail_user.drink == '1' %}
+                                {% elif detail_user.drink == 1 %}
                                 <p class="btn btn-secondary">한 병</p>
-                                {% elif detail_user.drink == '2' %}
+                                {% elif detail_user.drink == 2 %}
                                 <p class="btn btn-secondary">두 병</p>
                                 {% else %}
                                 <p class="btn btn-secondary">두 병 이상</p>

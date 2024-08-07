@@ -241,6 +241,7 @@ def show_friends():
 def login_user():
    user_id = request.form['ID']
    user_pw = request.form['PW']
+   print('user_pw : ', user_pw)
    given_pw_enc_val = hashlib.sha256(user_pw.encode()).hexdigest()
 
    user = db.user.find_one( {'user_id':user_id }, {'_id':False})
@@ -284,7 +285,6 @@ def go_main_if_logout():
    response.delete_cookie('expires')
    return response
 
-# {'_id': ObjectId('66b207e0c8083c31d4b0d629'), 'name': '최수빈', 'user_id': 'lightsaber29', 'user_pw': '1234', 'gender': 'F', 'mbti1': 'E', 'mbti2': 'N', 'mbti3': 'F', 'mbti4': 'J', 'hobby': 'etc', 'age': '27~29', 'meal': 'goout', 'exercise': 'no', 'laptop': 'apple', 'coffee': 'americano', 'breakfast': 'Y', 'drink': 0, 'url': '../static/img/no_user.jpg'}
 
 @app.route('/regist')
 def regist():
@@ -293,6 +293,7 @@ def regist():
 @app.route('/api/regist-user', methods=['POST'])
 def regist_user():
    new_user = request.form.to_dict()
+   print('new_user pw : ',new_user['user_pw'])
    name = new_user.get('name')
    user = db.user.find_one({ 'name':name }, {'_id':False})
    
@@ -382,6 +383,9 @@ def update_user():
 def update_password():
    past_pw = request.form['past_user_pw']
    new_pw = request.form['new_user_pw']
+
+   print('pw update past pw : ', past_pw)
+   print('pw update new pw : ', new_pw)
 
    past_pw_enc_val = hashlib.sha256(past_pw.encode()).hexdigest()
    new_pw_enc_val = hashlib.sha256(new_pw.encode()).hexdigest()

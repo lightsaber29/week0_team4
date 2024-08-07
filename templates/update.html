@@ -21,6 +21,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
         integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+        integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 
     <!-- Bootstrap CSS -->
@@ -612,8 +615,8 @@
             type: 'POST',
             url: '/api/update-password',
             data: {
-                past_user_pw,
-                new_user_pw
+                past_user_pw: CryptoJS.SHA256(past_user_pw).toString(),
+                new_user_pw: CryptoJS.SHA256(new_user_pw).toString()
             },
             success: function (response) {
                 let result = response['result']
