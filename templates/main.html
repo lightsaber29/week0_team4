@@ -24,12 +24,117 @@
     href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
   <!-- JavaScript -->
+  <script>
+
+    $(document).ready(function () {
+      if ("{{ msg }}") {
+        alert("{{ msg }}")
+      }
+      // show_users();
+    })
+
+    function log_in() {
+      let user_id = $('#login_id').val();
+      let user_pw = $('#login_pw').val();
+      $.ajax({
+        type: "POST",
+        url: "/login",
+        data: { ID: user_id, PW: user_pw },
+        success: function (response, status, xhr) {
+          if (response["result"] == 'success') {
+            window.location.href = '/login'
+          } else {
+            alert('로그인 실패. 아이디 또는 비밀번호를 확인하세요.')
+          }
+        }
+      })
+      $('#login_id').val("");
+      $('#login_pw').val("");
+    }
+
+    function empty_input() {
+      $('#login_id').val("");
+      $('#login_pw').val("");
+    }
+
+    function show_main() {
+      window.location.href = "/" //TODO 로그인했을때 유지되게 해야함. 
+    }
+
+    function show_join() {
+      window.location.href = "/regist"
+    }
+
+    function show_users() {
+      $('#cards_box').empty();
+      $.ajax({
+        type: "GET",
+        url: "/list",
+        data: {},
+        success: function (response) {
+          let users = response["users"]
+          for (let i = 0; i < users.length; i++) {
+            let user = users[i]
+
+            // make_card(user.url, user.name, user.mbti1, user.age, user.gender)
+            make_card(user)
+          }
+
+
+        }
+      })
+    }
+
+
+    function make_card({ _id, url, name, mbti1, mbti2, mbti3, mbti4, age, gender }) {
+      const mbti = (mbti1 + mbti2 + mbti3 + mbti4) || '';
+
+      let gender_ko = "";
+      if (gender == "F") {
+        gender_ko = "여";
+      } else if (gender == "M") {
+        gender_ko = "남";
+      }
+      let age_ko = "";
+      if (age == "~23") {
+        age_ko = "20대 초반";
+      } else if (age == "24~26") {
+        age_ko = "20대 중반";
+      } else if (age == "27~29") {
+        age_ko = "20대 후반";
+      } else if (age == "30~") {
+        age_ko = "30대";
+      }
+      let url_default = "../static/img/no_user.jpg";
+      if (!url) {
+        url = url_default;
+      }
+
+      let add_card = `<div class="col mb-4">
+        <div class="card h-100">
+          <a href="/qna/${_id}">
+          <img
+            src="${url}"
+            class="card-img-top" alt="...">
+          </a>
+          <div class="card-body">
+            <h4 class="card-title" id="name">${name}</h4>
+            <span class="badge text-bg-primary" id="gender">${gender_ko}</span>
+            <span class="badge text-bg-dark" id="mbti">${mbti}</span>
+            <span class="badge text-bg-success" id="age">${age_ko}</span>
+          </div>
+        </div>
+      </div>`
+      $('#cards_box').append(add_card);
+
+    }
+  </script>
 
 </head>
 
 <body>
   <div class="login_before">
-    <button type="button" class="btn btn-secondary">회원가입</button>
+    <button onclick="show_join()" type="button" class="btn btn-secondary">회원가입</button>
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#login_modal">로그인</button>
     <div class="modal fade" id="login_modal" tabindex="-1" data-backdrop="static" data-keyboard="false"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -38,80 +143,53 @@
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
           </div>
-          <div class="modal-body login_form">
-            <div class="form-group">
-              <label for="login_id">ID</label>
-              <input type="text" class="form-control one_line" id="login_id" placeholder="아이디를 입력하세요">
+          <form>
+            <div class="modal-body login_form">
+              <div class="form-group">
+                <label for="login_id">ID</label>
+                <input type="text" class="form-control one_line" id="login_id" placeholder="아이디를 입력하세요">
 
+              </div>
+              <div class="form-group">
+                <label for="login_pw">PW</label>
+                <input type="password" class="form-control one_line" id="login_pw" placeholder="패스워드를 입력하세요">
+              </div>
             </div>
-            <div class="form-group">
-              <label for="login_pw">PW</label>
-              <input type="password" class="form-control one_line" id="login_pw" placeholder="패스워드를 입력하세요">
+            <div class="modal-footer">
+              <button onclick="log_in()" type="button" class="btn btn-warning">확인</button>
+              <button onclick="empty_input()" type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
             </div>
+          </form>
 
-
-          </div>
-          <div class="modal-footer">
-            <button onclick="" type="button" class="btn btn-warning">확인</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="login_after">
-    'ㅇㅇ님' 안녕하세요!
+    '{{ name }}님' 안녕하세요!
     <button type="button" class="btn btn-warning">내정보</button>
     <button type="button" class="btn btn-primary">친구찾기</button>
   </div>
-  <div class="logo kanit-semibold">
+  <div onclick="show_users()" class="logo kanit-semibold">
     Jun9leBook
   </div>
   <div class="container">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="cards_box">
+      {% for user in users %}
       <div class="col mb-4">
         <div class="card h-100">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Tamias_striatus2.jpg/300px-Tamias_striatus2.jpg"
-            class="card-img-top" alt="...">
+          <a href="/qna/{{ user._id }}">
+            <img src="{{ user.url }}" class="card-img-top" alt="...">
+          </a>
           <div class="card-body">
-            <h4 class="card-title" id="name">김혜다</h4>
-            <span class="badge text-bg-primary" id="sex">여</span>
-            <span class="badge text-bg-dark" id="mbti">INFP</span>
-            <span class="badge text-bg-success" id="age">20대중반</span>
+            <h4 class="card-title" id="name">{{ user.name }}</h4>
+            <span class="badge text-bg-primary" id="gender">{{ user.gender_ko }}</span>
+            <span class="badge text-bg-dark" id="mbti">{{ user.mbti }}</span>
+            <span class="badge text-bg-success" id="age">{{ user.age_ko }}</span>
           </div>
         </div>
       </div>
-      <div class="col mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a short card.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-              additional content.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-              additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-
-      </div>
+      {% endfor %}
     </div>
 </body>
 

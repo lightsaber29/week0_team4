@@ -11,6 +11,7 @@ source .venv/bin/activate # 프로젝트 폴더 위치에서 venv 활성화
 
 3. install
 pip install flask requests bs4 pymongo
+pip install flask_jwt_extended
 
 4. 실행
 python app.py
