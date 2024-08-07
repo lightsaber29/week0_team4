@@ -63,6 +63,7 @@
             background: white;
             padding: 5px;
             z-index: 100;
+            padding-bottom: 30px;
         }
 
         .q-write-wrap>textarea {
@@ -90,14 +91,11 @@
                         <ul class="list-group list-group-numbered">
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>이름은? </p>
-                                <p>최민재</p>
+                                <p>{{ detail_user.name }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>성별은?</p>
-                                <p>
-                                    남자
-                                    여자
-                                </p>
+                                <p>{{ '여자' if detail_user.gender == 'F' else '남자'}}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>생일은?</p>
@@ -106,29 +104,39 @@
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>MBTIi는?</p>
                                 <p>
+                                    {% if detail_user.mbti1 == 'E' %}
                                     <input type="radio" class="btn-check" name="mbti1" id="mbti_e" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_e">E</label>
+                                    {% else %}
                                     <input type="radio" class="btn-check" name="mbti1" id="mbti_i" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_i">I</label>
-
+                                    {% endif %}
+                                    {% if detail_user.mbti2 == 'S' %}
                                     <input type="radio" class="btn-check" name="mbti2" id="mbti_s" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_s">S</label>
+                                    {% else %}
                                     <input type="radio" class="btn-check" name="mbti2" id="mbti_n" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_n">N</label>
-
+                                    {% endif %}
+                                    {% if detail_user.mbti3 == 'T' %}
                                     <input type="radio" class="btn-check" name="mbti3" id="mbti_t" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_t">T</label>
+                                    {% else %}
                                     <input type="radio" class="btn-check" name="mbti3" id="mbti_f" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_f">F</label>
-
+                                    {% endif %}
+                                    {% if detail_user.mbti4 == 'P' %}
                                     <input type="radio" class="btn-check" name="mbti4" id="mbti_p" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_p">P</label>
+                                    {% else %}
                                     <input type="radio" class="btn-check" name="mbti4" id="mbti_j" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_j">J</label>
+                                    {% endif %}
                                 </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>취미는?</p>
+                                {% if detail_user %}
                                 <p class="btn btn-primary">게임</p>
                                 <p class="btn btn-success">웹툰</p>
                                 <p class="btn btn-warning">운동</p>

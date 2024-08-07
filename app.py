@@ -18,6 +18,7 @@ import requests
 from bs4 import BeautifulSoup
 from source.auth.jwt_token import create_token, unauthorized_response, convert_cookie_2_jwt
 from datetime import datetime, timedelta
+from bson.objectid import ObjectId
 
 from pymongo import MongoClient
 client = MongoClient(mongodb_url)
@@ -71,7 +72,16 @@ def go_user_tetail(id):
    print(jwt)
    if jwt is None:
        return unauthorized_response()
-   return render_template('detail.html')
+   
+   me = jwt.copy()
+   detail_user = db.user.find_one({'_id': ObjectId(id)})
+
+   if detail_user is None:
+      return render_template('main.html', msg='아직 참여하지 않은 정글러입니다.')
+   
+   questions = list(db.question.find({'a_user':detail_user['user_id']}))
+   
+   return render_template('detail.html', me=me, detail_user=detail_user, questions=questions)
 
 @app.errorhandler(401)
 def unathentication(error):
