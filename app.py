@@ -28,6 +28,10 @@ db = client.week0_team4
 def home():
    return render_template('main.html')
 
+@app.route('/regist')
+def regist():
+   return render_template('regist.html')
+
 @app.route('/qna/<id>')
 def go_user_tetail(id):
    return render_template('detail.html')
@@ -37,6 +41,16 @@ def login_success():
    #토큰에서 유저네임 꺼내기. 
    user="김혜다"
    return render_template('main.html', name=user)
+
+@app.route('/list', methods=['GET'])
+def listing():
+   all_users = list(db.user.find({}))
+   for user in all_users:
+      user['_id'] = str(user['_id'])
+    
+   return jsonify({'result':'success', 'users':all_users})
+
+
 
 @app.route('/login', methods=['POST'])
 def login_user():
