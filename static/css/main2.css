@@ -1,28 +1,9 @@
-.login_before,
-.login_after {
-    width: 900px;
-    margin: 0 auto;
-    text-align: right;
-}
-
-.btn {
-    margin: 10px 5px;
-}
-
 .container {
     width: 900px;
     margin: 0 auto;
     padding: 50px;
 }
 
-.logo {
-    width: 500px;
-    margin: 0 auto;
-    height: 100px;
-    color: green;
-    font-size: 80px;
-    text-align: center;
-}
 
 .card-body {
     text-align: center;
@@ -47,14 +28,17 @@
     margin: 2px;
 }
 
-.kanit-semibold {
-    font-family: "Kanit", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-}
+
 
 .card-img-top {
     max-width: 100%;
     max-height: 250px;
     object-fit: cover;
+}
+
+* {
+    font-family: "Jua", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 21px;
 }

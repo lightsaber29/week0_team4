@@ -100,7 +100,7 @@ def go_user_tetail(id):
    print('question len', len(questions))
    for q in questions: q['_id'] = str(q['_id'])
    
-   return render_template('detail.html', me=me, detail_user=detail_user, questions=questions)
+   return render_template('detail.html', me=me, detail_user=detail_user, questions=questions, name=jwt['name'])
 
 @app.route('/qna/<q_id>', methods=['DELETE'])
 def delete_qna(q_id):
@@ -178,7 +178,10 @@ def listing():
 
 @app.route('/friends')
 def find_friends():
-   return render_template('friends.html')
+   jwt = convert_cookie_2_jwt(request.cookies)
+   if jwt is None:
+      return unauthorized_response()
+   return render_template('friends.html', name=jwt['name'])
 
 @app.route('/friends', methods=['POST'])
 def show_friends():
@@ -344,7 +347,7 @@ def update():
    user['_id'] = str(user['_id'])
 
    # 조회한 정보 보내주기
-   return render_template('update.html', user=user)
+   return render_template('update.html', user=user, name=jwt['name'])
 
 @app.route('/api/update-user', methods=['POST'])
 def update_user():
