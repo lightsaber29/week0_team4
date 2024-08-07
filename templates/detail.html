@@ -40,16 +40,17 @@
             list-style: none;
             height: 70px;
         }
-        .profile-data>ul>li p{
+
+        .profile-data>ul>li p {
             margin: 0;
         }
 
         .profile-data>ul>li>p:nth-child(1) {
-            width: 40%;
+            width: 34%;
         }
 
         .profile-data>ul>li>p:nth-child(2) {
-            width: 60%;
+            width: 62%;
         }
 
         .content-div {
@@ -74,11 +75,11 @@
         }
 
         .q-write-wrap>textarea {
-            width: 88%;
+            width: 87%;
         }
 
         .card-body input.form-control {
-            width: 77%;
+            width: 74%;
             display: inline-block;
         }
 
@@ -210,7 +211,7 @@
                 <div class="profile-format">
                     <div class="profile-img">
                         <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ detail_user.img }}"
-                            alt="{{ url_for('static', filename='img/no_user.jpg') }}">
+                            alt="...">
 
                         <!-- <img src="" class="img-thumbnail" alt=""> -->
                     </div>
@@ -448,7 +449,8 @@
                             <input type="checkbox" class="form-check-input" name="anonymous" id="anonymous">
                             <label class="form-check-label" for="anonymous">익명으로</label>
                         </div>
-                        <button type="button" class="btn btn-success" onclick="create_question()" style="font-size: 17px;">질문하기</button>
+                        <button type="button" class="btn btn-success" onclick="create_question()"
+                            style="font-size: 17px;">질문하기</button>
                     </div>
                 </div>
                 {% endif %}
