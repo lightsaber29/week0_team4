@@ -36,13 +36,10 @@ def regist():
 @app.route('/qna/<id>')
 def go_user_tetail(id):
    print('qna in')
-   temp = request.cookies.get('jwt')
-   
-   print(temp)
    jwt = convert_cookie_2_jwt(request.cookies)
    print(jwt)
    if jwt is None:
-       unauthorized_response()
+       return unauthorized_response()
    return render_template('detail.html')
 
 @app.errorhandler(401)

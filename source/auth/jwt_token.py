@@ -21,13 +21,9 @@ def unauthorized_response():
 def convert_cookie_2_jwt(cookie):
     jwt = cookie.get('jwt')
     expires = cookie.get('expires')
-    print('convert_cookie_2_jwt')
-    print('jwt',jwt)
-    print('expires',expires)
-    
-    expires = datetime.strptime(expires, "%Y-%m-%d %H:%M:%S.%f")
     
     try:
+        expires = datetime.strptime(expires, "%Y-%m-%d %H:%M:%S.%f")
         if expires < datetime.now():
             jwt = None
         else:
