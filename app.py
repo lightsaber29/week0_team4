@@ -20,6 +20,8 @@ from source.auth.jwt_token import create_token, unauthorized_response, convert_c
 from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 
+import hashlib
+
 from pymongo import MongoClient
 client = MongoClient(mongodb_url)
 db = client.week0_team4
@@ -237,10 +239,11 @@ def show_friends():
 def login_user():
    user_id = request.form['ID']
    user_pw = request.form['PW']
+   given_pw_enc_val = hashlib.sha256(user_pw.encode()).hexdigest()
 
-   user = db.user.find_one({'user_id':user_id,'user_pw':user_pw}, {'_id':False})
+   user = db.user.find_one( {'user_id':user_id }, {'_id':False})
 
-   if user:
+   if user and (user.get('user_pw') == given_pw_enc_val):
       jwt_token = create_token(user)
       response = make_response(jsonify({'result': 'success'}))
       expire_time = datetime.now() + timedelta(hours=24)
@@ -250,8 +253,7 @@ def login_user():
       response.set_cookie('expires', str(expire_time), httponly=True, samesite='Strict', max_age=max_age, secure=True)
       return response
    else:
-        return jsonify({'result': 'fail'})
-
+      return jsonify({'result': 'fail'})
 
 @app.route('/recive_token_test')
 @jwt_required()
@@ -294,18 +296,21 @@ def regist_user():
    
    # 가입 여부 확인: 이름으로 조회 후 user_id 값 존재 여부로 판단
    if user is None:
-      print('정글러가 아니야')
       # 정글러가 아니면 가입 불가
       return jsonify({'result': 'error', 'msg': '9기 정글러만 가입하실 수 있습니다.'})
 
    elif user.get('user_id') is None:
-      print('가입하지 않은 정글러')
       # 이름이 같은지 체크하고
       # 같은 이름이 있으면 해당 값에 update
+
+      # 비밀번호 암호화해서 문자열 형태로 저장
+      enc_pw_object = hashlib.sha256(new_user.get('user_pw').encode())
+      enc_pw_val = enc_pw_object.hexdigest()
+
       target = { "name" : name }
       value = {
          "user_id": new_user.get('user_id'),
-         "user_pw": new_user.get('user_pw'),
+         "user_pw": enc_pw_val,
          "gender": new_user.get('gender'),
          "mbti1": new_user.get('mbti1'),
          "mbti2": new_user.get('mbti2'),
@@ -323,7 +328,6 @@ def regist_user():
       db.user.update_one(target, { '$set' : value })
 
    else:
-      print('이미 가입한 정글러')
       # 가입이 된 사람이 가입하면
       # 이미 가입하셨습니다 하고 튕겨내기
       return jsonify({'result': 'error', 'msg': '이미 가입하셨습니다.'})
@@ -334,7 +338,6 @@ def regist_user():
 def update():
    # 로그인 한 유져 정보를 가져와서
    jwt = convert_cookie_2_jwt(request.cookies)
-   print(jwt)
    if jwt is None:
       return unauthorized_response()
    
@@ -348,8 +351,6 @@ def update():
 @app.route('/api/update-user', methods=['POST'])
 def update_user():
    new_user = request.form.to_dict()
-   print('new_user: ', new_user)
-   print('user_id: ', new_user.get('user_id'))
 
    target = { "user_id" : new_user.get('user_id') }
    value = {
@@ -377,9 +378,11 @@ def update_password():
    past_pw = request.form['past_user_pw']
    new_pw = request.form['new_user_pw']
 
+   past_pw_enc_val = hashlib.sha256(past_pw.encode()).hexdigest()
+   new_pw_enc_val = hashlib.sha256(new_pw.encode()).hexdigest()
+
    # 유저정보 가져와서 조회
    jwt = convert_cookie_2_jwt(request.cookies)
-   print(jwt)
    if jwt is None:
       return unauthorized_response()
    
@@ -387,14 +390,14 @@ def update_password():
    user = db.user.find_one({'user_id':user_id}, {'_id':False})
 
    # 현재비밀번호 일치 여부 검증
-   if user['user_pw'] == past_pw:
+   if user['user_pw'] == past_pw_enc_val:
       target = { "user_id" : user_id }
-      value = { "user_pw": new_pw }
+      value = { "user_pw": new_pw_enc_val }
       db.user.update_one(target, { '$set' : value })
    else:
       return jsonify({'result': 'error', 'msg': '현재 비밀번호가 일치하지 않습니다.'})
 
-   return jsonify({'result': 'success', 'msg': '수정되었습니다.'})
+   return jsonify({'result': 'success', 'msg': '수정되었습니다. 다시 로그인 해 주세요.'})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
