@@ -27,6 +27,9 @@
   <script>
 
     $(document).ready(function () {
+      if ("{{ msg }}") {
+        alert("{{ msg }}")
+      }
       show_users();
     })
 
@@ -37,12 +40,9 @@
         type: "POST",
         url: "/login",
         data: { ID: user_id, PW: user_pw },
-        success: function (response) {
+        success: function (response, status, xhr) {
           if (response["result"] == 'success') {
-            //TODO alert('로그인 성공!');
-            //토큰을 쿠키에 저장
-            //페이지 이동(토큰을 같이 보냄)
-            //token 추가시 hide/show 
+            window.location.href = '/login'
           } else {
             alert('로그인 실패. 아이디 또는 비밀번호를 확인하세요.')
           }
