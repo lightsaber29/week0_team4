@@ -154,8 +154,8 @@ def regist_user():
    # 가입 여부 확인: 이름으로 조회 후 user_id 값 존재 여부로 판단
    if user is None:
       print('정글러가 아니야')
-      # 이름이 다르면 새로 insert
-      db.user.insert_one(new_user)
+      # 정글러가 아니면 가입 불가
+      return jsonify({'result': 'error', 'msg': '9기 정글러만 가입하실 수 있습니다.'})
 
    elif user.get('user_id') is None:
       print('가입하지 않은 정글러')
