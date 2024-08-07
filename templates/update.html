@@ -23,12 +23,13 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 
     <!-- custom -->
-    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="../static/css/main.css">
 
     <title>정글북 Jun9le-book</title>
 </head>
 
 <body>
+    {% include 'header.html' %}
     <div class="profile-format">
         <div class="profile-img">
             <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="static/img/no_user.jpg" alt="...">
@@ -341,7 +342,7 @@
 
     <div class="button-bottom">
         <button type="button" class="btn btn-primary" onclick="validation()">수정하기</button>
-        <button type="button" class="btn btn-dark">취소</button>
+        <button type="button" class="btn btn-dark" onclick="window.history.back()">취소</button>
     </div>
 
     <!-- 비밀번호 변경 modal -->
@@ -582,6 +583,7 @@
             alert('입력하신 비밀번호가 일치하지 않습니다.')
             $('.input_ckeck_new_user_pw div').addClass('d-block')
             $('.input_ckeck_new_user_pw input').addClass('is-invalid')
+            return
         } else {
             $('.input_ckeck_new_user_pw div').removeClass('d-block')
             $('.input_ckeck_new_user_pw input').removeClass('is-invalid')

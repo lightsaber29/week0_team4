@@ -1,17 +1,3 @@
-.kanit-semibold {
-    font-family: "Kanit", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-}
-
-.logo {
-    width:500px;
-    margin:0 auto;
-    height:100px;
-    color:green;
-    font-size:80px;
-    text-align: center;
-}
 
 .container {
     width: 900px;
@@ -37,3 +23,8 @@
     margin-right: 18px;
 }
 
+.card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}

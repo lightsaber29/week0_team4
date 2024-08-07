@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>정글북 Jun9le-book</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='css/main.css') }}">
     <!-- <link rel='stylesheet' type='text/css' media='screen' href='bootstrapPratice.css'>
@@ -38,7 +38,10 @@
 
         .profile-data>ul>li {
             list-style: none;
-            height: 51px;
+            height: 70px;
+        }
+        .profile-data>ul>li p{
+            margin: 0;
         }
 
         .profile-data>ul>li>p:nth-child(1) {
@@ -200,6 +203,7 @@
 </head>
 
 <body>
+    {% include 'header.html' %}
     <div class="wrap">
         <div class="content-div">
             <div class="jungler">
@@ -443,7 +447,7 @@
                             <input type="checkbox" class="form-check-input" name="anonymous" id="anonymous">
                             <label class="form-check-label" for="anonymous">익명으로</label>
                         </div>
-                        <button type="button" class="btn btn-success" onclick="create_question()">질문하기</button>
+                        <button type="button" class="btn btn-success" onclick="create_question()" style="font-size: 17px;">질문하기</button>
                     </div>
                 </div>
                 {% endif %}
