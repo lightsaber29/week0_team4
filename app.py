@@ -147,19 +147,47 @@ def regist():
 
 @app.route('/api/regist-user', methods=['POST'])
 def regist_user():
-
-   # 가입이 안 된 사람이 가입하면
-   # 이름이 같은지 체크하고
-   # 같은 이름이 있으면 해당 값에 update
-
-   # 이름이 다르면 새로 insert
-
-   # 가입이 된 사람이 가입하면 
-   # 이미 가입하셨습니다 하고 튕겨내기
-
    new_user = request.form.to_dict()
-   db.user.insert_one(new_user)
-   return jsonify({'result': 'success', 'msg': '등록 완료!'})
+   name = new_user.get('name')
+   user = db.user.find_one({ 'name':name }, {'_id':False})
+   
+   # 가입 여부 확인: 이름으로 조회 후 user_id 값 존재 여부로 판단
+   if user is None:
+      print('정글러가 아니야')
+      # 이름이 다르면 새로 insert
+      db.user.insert_one(new_user)
+
+   elif user.get('user_id') is None:
+      print('가입하지 않은 정글러')
+      # 이름이 같은지 체크하고
+      # 같은 이름이 있으면 해당 값에 update
+      target = { "name" : name }
+      value = {
+         "user_id": new_user.get('user_id'),
+         "user_pw": new_user.get('user_pw'),
+         "gender": new_user.get('gender'),
+         "mbti1": new_user.get('mbti1'),
+         "mbti2": new_user.get('mbti2'),
+         "mbti3": new_user.get('mbti3'),
+         "mbti4": new_user.get('mbti4'),
+         "hobby": new_user.get('hobby'),
+         "age": new_user.get('age'),
+         "meal": new_user.get('meal'),
+         "exercise": new_user.get('exercise'),
+         "laptop": new_user.get('laptop'),
+         "coffee": new_user.get('coffee'),
+         "breakfast": new_user.get('breakfast'),
+         "drink": int(new_user.get('drink'))
+      }
+      db.user.update_one(target, { '$set' : value })
+
+   else:
+      print('이미 가입한 정글러')
+      # 가입이 된 사람이 가입하면
+      # 이미 가입하셨습니다 하고 튕겨내기
+      return jsonify({'result': 'error', 'msg': '이미 가입하셨습니다.'})
+
+   return jsonify({'result': 'success', 'msg': '회원가입이 완료되었습니다. 로그인 해 주세요.'})
 
 @app.route('/update')
 def update():
@@ -199,7 +227,6 @@ def update_user():
       "breakfast": new_user.get('breakfast'),
       "drink": int(new_user.get('drink'))
    }
-   print('value: ', value)
 
    db.user.update_one(target, { '$set' : value })
    return jsonify({'result': 'success', 'msg': '수정되었습니다.'})
