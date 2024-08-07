@@ -25,6 +25,12 @@
     rel="stylesheet">
   <!-- JavaScript -->
   <script>
+    $(function () {
+      if ("{{ msg }}") {
+        alert("{{ msg }}")
+        document.cookie = `jwt=; HttpOnly; Secure; SameSite=Strictl expires=0`
+      }
+    })
     function log_in() {
       let user_id = $('#login_id').val();
       let user_pw = $('#login_pw').val();
@@ -32,11 +38,14 @@
         type: "POST",
         url: "/login",
         data: { ID: user_id, PW: user_pw },
-        success: function (response) {
+        success: function (response, status, xhr) {
           if (response["result"] == 'success') {
             // alert('로그인 성공!');
+            // token = xhr.getResponseHeader('jwt')
             //토큰을 쿠키에 저장
+            // document.cookie = `jwt=${token}; HttpOnly; Secure; SameSite=Strictl expires=${new Date(Date.now() + 24 * 60 * 60 * 1000)}`
             //페이지 이동(토큰을 같이 보냄)
+            window.location.href = '/login'
             //token 추가시 hide/show 
           } else {
             alert('로그인 실패. 아이디 또는 비밀번호를 확인하세요.')
@@ -65,14 +74,12 @@
             <div class="modal-body login_form">
               <div class="form-group">
                 <label for="login_id">ID</label>
-                <input type="text" class="form-control one_line" id="login_id"
-                  placeholder="아이디를 입력하세요">
+                <input type="text" class="form-control one_line" id="login_id" placeholder="아이디를 입력하세요">
 
               </div>
               <div class="form-group">
                 <label for="login_pw">PW</label>
-                <input type="password" class="form-control one_line" id="login_pw"
-                  placeholder="패스워드를 입력하세요">
+                <input type="password" class="form-control one_line" id="login_pw" placeholder="패스워드를 입력하세요">
               </div>
             </div>
             <div class="modal-footer">
