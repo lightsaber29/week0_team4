@@ -41,8 +41,12 @@
             height: 51px;
         }
 
-        .profile-data>ul>li>p {
-            width: 50%;
+        .profile-data>ul>li>p:nth-child(1) {
+            width: 40%;
+        }
+
+        .profile-data>ul>li>p:nth-child(2) {
+            width: 60%;
         }
 
         .content-div {
@@ -63,6 +67,7 @@
             background: white;
             padding: 5px;
             z-index: 100;
+            padding-bottom: 30px;
         }
 
         .q-write-wrap>textarea {
@@ -70,10 +75,128 @@
         }
 
         .card-body input.form-control {
-            width: 88%;
+            width: 77%;
             display: inline-block;
         }
+
+        footer {
+            height: 35px;
+            width: 100%;
+        }
+
+        .card-body h5.card-title>span {
+            font-size: 13px;
+        }
+
+        .q-modify {
+            display: none;
+        }
+
+        .modify-btn-wrap {
+            display: flex;
+            flex-direction: column;
+            float: right;
+        }
     </style>
+    <script>
+        function show_modify(id) {
+            $(`.q-modify.${id}`).show()
+            $(`.q-view.${id}`).hide()
+        }
+
+        function delete_modify(id) {
+            if (!confirm('질문을 삭제하시겠습니까?')) {
+                return
+            }
+
+            $.ajax({
+                url: `/qna/${id}`,
+                method: 'DELETE',
+                success: (response) => {
+                    if (response.result === 'answered') {
+                        alert('답변이 달린 질문입니다.')
+                    }
+                    const _id = '{{ detail_user._id }}'
+                    window.location.href = `/qna/${_id}`
+                }
+            })
+        }
+
+        function form_modify(id) {
+            const question = $(`.q-modify.${id} input`).val()
+            if (!question) {
+                alert('질문은 빈칸 일 수 없습니다.')
+                return;
+            }
+
+            $.ajax({
+                url: `/qna/${id}`,
+                data: {
+                    question,
+                    anonymous: $(`.q-modify.${id} .modify-btn-wrap input`).is(":checked") ? 'Y' : 'N'
+                },
+                method: 'PUT',
+                success: (response) => {
+                    if (response.result === 'answered') {
+                        alert('답변이 달린 질문입니다.')
+                    }
+                    const _id = '{{ detail_user._id }}'
+                    window.location.href = `/qna/${_id}`
+                }
+            })
+        }
+
+        function hide_modify(id) {
+            $(`.q-modify.${id}`).hide()
+            $(`.q-view.${id}`).show()
+        }
+
+        function modify_answer(q_id) {
+            $.ajax({
+                url: `/qna/answer/${q_id}`,
+                method: 'PUT',
+                data: { answer: $(`.answer.${q_id}`).val() },
+                success: (response) => {
+                    window.location.href = '/qna/{{ detail_user._id}}'
+                }
+            })
+        }
+        function create_answer(q_id) {
+            $.ajax({
+                url: `/qna/answer/${q_id}`,
+                method: 'POST',
+                data: { answer: $(`.answer.${q_id}`).val() },
+                success: (response) => {
+                    if (response.result === 'none') {
+                        alert('삭제된 질문입니다.')
+                    }
+                    window.location.href = '/qna/{{ detail_user._id}}'
+                }
+            })
+        }
+
+        function create_question() {
+            const question = $('#question').val()
+            if (!question) {
+                alert('질문을 채워주세요')
+                return;
+            }
+
+            const anonymous = $('input#anonymous').is(':checked') ? 'Y' : 'N'
+
+            $.ajax({
+                url: '/qna',
+                method: 'POST',
+                data: {
+                    anonymous, question,
+                    a_user: '{{ detail_user.user_id }}',
+                },
+                success: (response) => {
+                    window.location.href = '/qna/{{ detail_user._id }}'
+                }
+            })
+        }
+    </script>
 </head>
 
 <body>
@@ -90,162 +213,244 @@
                         <ul class="list-group list-group-numbered">
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>이름은? </p>
-                                <p>최민재</p>
+                                <p>{{ detail_user.name }}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>성별은?</p>
-                                <p>
-                                    남자
-                                    여자
-                                </p>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <p>생일은?</p>
-                                <p>00월 00일</p>
+                                <p>{{ '여자' if detail_user.gender == 'F' else '남자'}}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>MBTIi는?</p>
                                 <p>
+                                    {% if detail_user.mbti1 == 'E' %}
                                     <input type="radio" class="btn-check" name="mbti1" id="mbti_e" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_e">E</label>
+                                    {% else %}
                                     <input type="radio" class="btn-check" name="mbti1" id="mbti_i" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_i">I</label>
-
+                                    {% endif %}
+                                    {% if detail_user.mbti2 == 'S' %}
                                     <input type="radio" class="btn-check" name="mbti2" id="mbti_s" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_s">S</label>
+                                    {% else %}
                                     <input type="radio" class="btn-check" name="mbti2" id="mbti_n" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_n">N</label>
-
+                                    {% endif %}
+                                    {% if detail_user.mbti3 == 'T' %}
                                     <input type="radio" class="btn-check" name="mbti3" id="mbti_t" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_t">T</label>
+                                    {% else %}
                                     <input type="radio" class="btn-check" name="mbti3" id="mbti_f" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_f">F</label>
-
+                                    {% endif %}
+                                    {% if detail_user.mbti4 == 'P' %}
                                     <input type="radio" class="btn-check" name="mbti4" id="mbti_p" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_p">P</label>
+                                    {% else %}
                                     <input type="radio" class="btn-check" name="mbti4" id="mbti_j" autocomplete="off">
                                     <label class="btn btn-secondary" for="mbti_j">J</label>
+                                    {% endif %}
                                 </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>취미는?</p>
+                                {% if detail_user.hobby == 'game' %}
                                 <p class="btn btn-primary">게임</p>
+                                {% elif detail_user.hobby == 'webtoon' %}
                                 <p class="btn btn-success">웹툰</p>
+                                {% elif detail_user.hobby == 'exercise' %}
                                 <p class="btn btn-warning">운동</p>
+                                {% elif detail_user.hobby == 'play' %}
                                 <p class="btn btn-info">악기</p>
+                                {% else %}
+                                <p class="btn btn-info">기타</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>나이대는?</p>
+                                {% if detail_user.age == '~23' %}
                                 <p>20대 초반 ( ~ 23세)</p>
+                                {% elif detail_user.age == '24~26' %}
                                 <p>20대 중반 (24 ~ 26)</p>
+                                {% elif detail_user.age == '27~29' %}
                                 <p>20대 후반 (27 ~ 29)</p>
+                                {% else %}
                                 <p>30대</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>학식파? 외식파</p>
+                                {% if detail_user.meal == 'school' %}
                                 <p class="btn btn-primary">학식이 좋아요</p>
+                                {% else %}
                                 <p class="btn btn-primary">외식이 좋아요</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>운동은?</p>
+                                {% if detail_user.exercise == 'running' %}
                                 <p class="btn btn-primary">러닝</p>
+                                {% elif detail_user.exercise == 'gogym' %}
                                 <p class="btn btn-success">헬스</p>
+                                {% elif detail_user.exercise == 'cycling' %}
                                 <p class="btn btn-warning">사이클</p>
+                                {% elif detail_user.exercise == 'yoga' %}
                                 <p class="btn btn-info">요가</p>
+                                {% else %}
                                 <p class="btn btn-secondary">운동 싫어요</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>노트북?</p>
+                                {% if detail_user.exercise == 'samsumg' %}
                                 <p class="btn btn-light">삼성</p>
+                                {% elif detail_user.exercise == 'lg' %}
                                 <p class="btn btn-light">LG (그램 등)</p>
+                                {% elif detail_user.exercise == 'apple' %}
                                 <p class="btn btn-light">Apple (mac)</p>
+                                {% else %}
                                 <p class="btn btn-light">기타</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>커피취향?</p>
+                                {% if detail_user.coffee == 'americano' %}
                                 <p class="btn btn-success">아메리카노</p>
+                                {% elif detail_user.coffee == 'latte' %}
                                 <p class="btn btn-success">라떼</p>
+                                {% elif detail_user.coffee == 'ade' %}
                                 <p class="btn btn-success">에이드</p>
+                                {% elif detail_user.coffee == 'frappe' %}
                                 <p class="btn btn-success">프라페(프라푸치노, 블렌디드)</p>
+                                {% elif detail_user.coffee == 'tea' %}
                                 <p class="btn btn-success">차</p>
+                                {% else %}
                                 <p class="btn btn-success">기타</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>아침밥?</p>
+                                {% if detail_user.breakfast == 'Y'%}
                                 <p class="btn btn-info">먹어요</p>
+                                {% else %}
                                 <p class="btn btn-info">안먹어요</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>주량은?</p>
+                                {% if detail_user.drink == '0' %}
                                 <p class="btn btn-secondary">반 병 이하</p>
+                                {% elif detail_user.drink == '1' %}
                                 <p class="btn btn-secondary">한 병</p>
+                                {% elif detail_user.drink == '2' %}
                                 <p class="btn btn-secondary">두 병</p>
+                                {% else %}
                                 <p class="btn btn-secondary">두 병 이상</p>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="q-list">
-                <!-- 답변자도 아니고 질문한 사람도 아닐때 -->
+                {% for question in questions %}
+                {% if question.q_user == me.user_id and question.a_user != me.user_id %}
+                <!-- 질문자일때 -->
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            This is Question
+                        <h5 class="card-title q-view {{ question._id }}">
+                            {{ question.question }}
+                            <span class="badge text-bg-secondary">{{ '익명' if
+                                question.anonymous == 'Y' else
+                                question.q_name}}</span>
+                            <!-- 답변이 있으면 안뜸 -->
+                            {% if 'answer' not in question %}
+                            <button type="button" class="btn btn-outline-success q-view {{ question._id }}"
+                                onclick="show_modify('{{ question._id }}')">질문수정</button>
+                            <button type="button" class="btn btn-outline-danger q-view {{ question._id }}"
+                                onclick="delete_modify('{{ question._id }}')">질문삭제</button>
+                            {% endif %}
                         </h5>
-                        This is some text within a card body.
+                        <!-- 질문 수정 시 -->
+                        <div class="q-modify {{ question._id }}">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput"
+                                    placeholder="{{ question.question }}" value="{{ question.question }}">
+                                <label for="floatingInput">질문</label>
+                                <div class="modify-btn-wrap">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            id="anonymous-{{ question._id }}"
+                                            checked="{{true if question.anonymous == 'Y' else 'N'}}">
+                                        <label class="form-check-label" for="anonymous-{{ question._id }}">익명으로</label>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-success"
+                                            onclick="form_modify('{{ question._id }}')">질문수정</button>
+                                        <button type="button" class="btn btn-danger"
+                                            onclick="hide_modify('{{ question._id }}')">수정취소</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p>{{ question.answer }}</p>
                     </div>
                 </div>
+                {% elif question.a_user == me.user_id and question.q_user != me.user_id %}
                 <!-- 답변자일 때 -->
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            This is Question
+                            {{ question.question }}
+                            <span class="badge text-bg-secondary">{{ '익명' if question.anonymous == 'Y' else
+                                question.q_name}}</span>
                         </h5>
-                        <p>This is some text within a card body.<button type="button"
-                                class="btn btn-outline-success">답변수정</button></p>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control answer {{ question._id }}"
+                                value="{{ question.answer }}">
                             <label for="floatingInput">답변</label>
-                            <button type="button" class="btn btn-success">답변수정</button>
+                            {% if 'answer' in question%}
+                            <button type="button" class="btn btn-success"
+                                onclick="modify_answer('{{ question._id }}')">답변수정</button>
+                            {% else %}
+                            <button type="button" class="btn btn-success"
+                                onclick="create_answer('{{ question._id }}')">답변달기</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
-                <!-- 질문자일때 -->
+                {% else %}
+                <!-- 답변자도 아니고 질문한 사람도 아닐때 -->
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            This is Question
-                            <!-- 답변이 있으면 안뜸 -->
-                            <button type="button" class="btn btn-outline-success">질문수정</button>
-                            <button type="button" class="btn btn-outline-danger">질문삭제</button>
+                            {{ question.question }}
+                            <h6><span class="badge text-bg-secondary">{{ '익명' if question.anonymous == 'Y' else
+                                    question.q_name}}</span></h6>
                         </h5>
-                        <!-- 질문 수정 시 -->
-                        <p>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="">
-                            <label for="floatingInput">질문</label>
-                            <button type="button" class="btn btn-success">질문수정</button>
-                        </div>
-                        </p>
-                        <p>This is some text within a card body.</p>
+                        <p>{{ question.answer }}</p>
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
+
+                {% if detail_user.user_id != me.user_id %}
                 <!-- 답변자는 보이지 않음 -->
                 <div class="q-write-wrap">
-                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                    <textarea class="form-control" id="question" aria-label="With textarea"></textarea>
                     <div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="익명" id="익명">
-                            <label class="form-check-label" for="익명">익명으로</label>
+                            <input type="checkbox" class="form-check-input" name="anonymous" id="anonymous">
+                            <label class="form-check-label" for="anonymous">익명으로</label>
                         </div>
-                        <button type="button" class="btn btn-success">질문하기</button>
+                        <button type="button" class="btn btn-success" onclick="create_question()">질문하기</button>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
+    <footer></footer>
 </body>
 
 </html>
