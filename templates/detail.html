@@ -98,10 +98,6 @@
                                 <p>{{ '여자' if detail_user.gender == 'F' else '남자'}}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <p>생일은?</p>
-                                <p>00월 00일</p>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>MBTIi는?</p>
                                 <p>
                                     {% if detail_user.mbti1 == 'E' %}
@@ -136,59 +132,99 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>취미는?</p>
-                                {% if detail_user %}
+                                {% if detail_user.hobby == 'game' %}
                                 <p class="btn btn-primary">게임</p>
+                                {% elif detail_user.hobby == 'webtoon' %}
                                 <p class="btn btn-success">웹툰</p>
+                                {% elif detail_user.hobby == 'exercise' %}
                                 <p class="btn btn-warning">운동</p>
+                                {% elif detail_user.hobby == 'play' %}
                                 <p class="btn btn-info">악기</p>
+                                {% else %}
+                                <p class="btn btn-info">기타</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>나이대는?</p>
+                                {% if detail_user.age == '~23' %}
                                 <p>20대 초반 ( ~ 23세)</p>
+                                {% elif detail_user.age == '24~26' %}
                                 <p>20대 중반 (24 ~ 26)</p>
+                                {% elif detail_user.age == '27~29' %}
                                 <p>20대 후반 (27 ~ 29)</p>
+                                {% else %}
                                 <p>30대</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>학식파? 외식파</p>
+                                {% if detail_user.meal == 'school' %}
                                 <p class="btn btn-primary">학식이 좋아요</p>
+                                {% else %}
                                 <p class="btn btn-primary">외식이 좋아요</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>운동은?</p>
+                                {% if detail_user.exercise == 'running' %}
                                 <p class="btn btn-primary">러닝</p>
+                                {% elif detail_user.exercise == 'gogym' %}
                                 <p class="btn btn-success">헬스</p>
+                                {% elif detail_user.exercise == 'cycling' %}
                                 <p class="btn btn-warning">사이클</p>
+                                {% elif detail_user.exercise == 'yoga' %}
                                 <p class="btn btn-info">요가</p>
+                                {% else %}
                                 <p class="btn btn-secondary">운동 싫어요</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>노트북?</p>
+                                {% if detail_user.exercise == 'samsumg' %}
                                 <p class="btn btn-light">삼성</p>
+                                {% elif detail_user.exercise == 'lg' %}
                                 <p class="btn btn-light">LG (그램 등)</p>
+                                {% elif detail_user.exercise == 'apple' %}
                                 <p class="btn btn-light">Apple (mac)</p>
+                                {% else %}
                                 <p class="btn btn-light">기타</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>커피취향?</p>
+                                {% if detail_user.coffee == 'americano' %}
                                 <p class="btn btn-success">아메리카노</p>
+                                {% elif detail_user.coffee == 'latte' %}
                                 <p class="btn btn-success">라떼</p>
+                                {% elif detail_user.coffee == 'ade' %}
                                 <p class="btn btn-success">에이드</p>
+                                {% elif detail_user.coffee == 'frappe' %}
                                 <p class="btn btn-success">프라페(프라푸치노, 블렌디드)</p>
+                                {% elif detail_user.coffee == 'tea' %}
                                 <p class="btn btn-success">차</p>
+                                {% else %}
                                 <p class="btn btn-success">기타</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>아침밥?</p>
+                                {% if detail_user.breakfast == 'Y'%}
                                 <p class="btn btn-info">먹어요</p>
+                                {% else %}
                                 <p class="btn btn-info">안먹어요</p>
+                                {% endif %}
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>주량은?</p>
+                                {% if detail_user.drink == '0' %}
                                 <p class="btn btn-secondary">반 병 이하</p>
+                                {% elif detail_user.drink == '1' %}
                                 <p class="btn btn-secondary">한 병</p>
+                                {% elif detail_user.drink == '2' %}
                                 <p class="btn btn-secondary">두 병</p>
+                                {% else %}
                                 <p class="btn btn-secondary">두 병 이상</p>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>

@@ -72,9 +72,14 @@ def go_user_tetail(id):
    me = jwt.copy()
    detail_user = db.user.find_one({'_id': ObjectId(id)})
 
-   if detail_user is None:
-      return render_template('main.html', msg='아직 참여하지 않은 정글러입니다.')
+   print(detail_user)
+
+   if 'user_id' not in detail_user:
+      all_users = list(db.user.find({}))
+      all_users = convert_user_list(all_users)
+      return render_template('main.html', msg='아직 참여하지 않은 정글러입니다.',users=all_users)
    
+   print(detail_user)
    questions = list(db.question.find({'a_user':detail_user['user_id']}))
    
    return render_template('detail.html', me=me, detail_user=detail_user, questions=questions)
