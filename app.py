@@ -23,11 +23,42 @@ from pymongo import MongoClient
 client = MongoClient(mongodb_url)
 db = client.week0_team4
 
+def convert_user_list(all_users):
+   for user in all_users:
+      if 'url' not in user:
+         user['url'] = '../static/img/no_user.jpg'
+      
+      user['mbti'] = ''
+      if 'mbti1' in user:
+         user['mbti'] = user['mbti1'] + user['mbti2'] + user['mbti3'] + user['mbti4']
+      
+      user['age_ko'] = ''
+      if 'age' in user:
+         if user['age'] == "~23" : 
+            user['age_ko'] = "20대 초반"
+         elif user['age'] == "24~26":
+            user['age_ko'] = "20대 중반"
+         elif user['age'] == "27~29":
+            user['age_ko'] = "20대 후반"
+         elif user['age'] == "30~":
+            user['age_ko'] = "30대"
+
+      user['gender_ko'] = ''
+      if 'gender' in user:
+         if user['gender'] == 'F':
+            user['gender_ko'] = '여'
+         elif user['gender'] == 'M':
+            user['gender_ko'] = '남'
+
+      user['_id'] = str(user['_id'])
+   return all_users
 
 ## HTML을 주는 부분
 @app.route('/')
 def home():
-   return render_template('main.html')
+   all_users = list(db.user.find({}))
+   all_users = convert_user_list(all_users)
+   return render_template('main.html',users=all_users)
 
 @app.route('/regist')
 def regist():
@@ -61,13 +92,15 @@ def login_success():
       return unauthorized_response()
    
    name = jwt['name']
-   return render_template('main.html', name=name)
+   all_users = list(db.user.find({}))
+   all_users = convert_user_list(all_users)
+
+   return render_template('main.html', name=name, users=all_users)
 
 @app.route('/list', methods=['GET'])
 def listing():
    all_users = list(db.user.find({}))
-   for user in all_users:
-      user['_id'] = str(user['_id'])
+   all_users = convert_user_list(all_users)
     
    return jsonify({'result':'success', 'users':all_users})
 
@@ -102,10 +135,16 @@ def recive_token_test():
 
 @app.route('/main/nologin')
 def go_main_if_nologin():
-   response = make_response(render_template('main.html', msg='로그인이 필요합니다.'))
+   all_users = list(db.user.find({}))
+   all_users = convert_user_list(all_users)
+
+   response = make_response(render_template('main.html', msg='로그인이 필요합니다.', users=all_users))
    response.delete_cookie('jwt')
    response.delete_cookie('expires')
    return response
 
+# {'_id': ObjectId('66b207e0c8083c31d4b0d629'), 'name': '최수빈', 'user_id': 'lightsaber29', 'user_pw': '1234', 'gender': 'F', 'mbti1': 'E', 'mbti2': 'N', 'mbti3': 'F', 'mbti4': 'J', 'hobby': 'etc', 'age': '27~29', 'meal': 'goout', 'exercise': 'no', 'laptop': 'apple', 'coffee': 'americano', 'breakfast': 'Y', 'drink': 0, 'url': '../static/img/no_user.jpg'}
+
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
+

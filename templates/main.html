@@ -30,7 +30,7 @@
       if ("{{ msg }}") {
         alert("{{ msg }}")
       }
-      show_users();
+      // show_users();
     })
 
     function log_in() {
@@ -52,7 +52,7 @@
       $('#login_pw').val("");
     }
 
-    function empty_input(){
+    function empty_input() {
       $('#login_id').val("");
       $('#login_pw').val("");
     }
@@ -85,7 +85,7 @@
       })
     }
 
-    
+
     function make_card({ _id, url, name, mbti1, mbti2, mbti3, mbti4, age, gender }) {
       const mbti = (mbti1 + mbti2 + mbti3 + mbti4) || '';
 
@@ -96,16 +96,16 @@
         gender_ko = "남";
       }
       let age_ko = "";
-      if (age == "~23"){
+      if (age == "~23") {
         age_ko = "20대 초반";
-      } else if (age == "24~26"){
+      } else if (age == "24~26") {
         age_ko = "20대 중반";
-      } else if (age == "27~29"){
+      } else if (age == "27~29") {
         age_ko = "20대 후반";
-      } else if (age == "30~"){
+      } else if (age == "30~") {
         age_ko = "30대";
       }
-      let url_default ="../static/img/no_user.jpg"; 
+      let url_default = "../static/img/no_user.jpg";
       if (!url) {
         url = url_default;
       }
@@ -175,19 +175,21 @@
   </div>
   <div class="container">
     <div class="row row-cols-1 row-cols-md-3 g-4" id="cards_box">
+      {% for user in users %}
       <div class="col mb-4">
         <div class="card h-100">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Tamias_striatus2.jpg/300px-Tamias_striatus2.jpg"
-            class="card-img-top" alt="...">
+          <a href="/qna/{{ user._id }}">
+            <img src="{{ user.url }}" class="card-img-top" alt="...">
+          </a>
           <div class="card-body">
-            <h4 class="card-title" id="name">김혜다</h4>
-            <span class="badge text-bg-primary" id="gender">여</span>
-            <span class="badge text-bg-dark" id="mbti">INFP</span>
-            <span class="badge text-bg-success" id="age">20대중반</span>
+            <h4 class="card-title" id="name">{{ user.name }}</h4>
+            <span class="badge text-bg-primary" id="gender">{{ user.gender_ko }}</span>
+            <span class="badge text-bg-dark" id="mbti">{{ user.mbti }}</span>
+            <span class="badge text-bg-success" id="age">{{ user.age_ko }}</span>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
 </body>
 
