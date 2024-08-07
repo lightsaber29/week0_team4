@@ -40,13 +40,7 @@
         data: { ID: user_id, PW: user_pw },
         success: function (response, status, xhr) {
           if (response["result"] == 'success') {
-            // alert('로그인 성공!');
-            // token = xhr.getResponseHeader('jwt')
-            //토큰을 쿠키에 저장
-            // document.cookie = `jwt=${token}; HttpOnly; Secure; SameSite=Strictl expires=${new Date(Date.now() + 24 * 60 * 60 * 1000)}`
-            //페이지 이동(토큰을 같이 보냄)
             window.location.href = '/login'
-            //token 추가시 hide/show 
           } else {
             alert('로그인 실패. 아이디 또는 비밀번호를 확인하세요.')
           }
