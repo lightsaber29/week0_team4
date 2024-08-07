@@ -69,6 +69,10 @@
       window.location.href = "/main/logout"
     }
 
+    function update() {
+      window.location.href = ""
+    }
+
 
 
     function make_card({ _id, url, name, mbti1, mbti2, mbti3, mbti4, age, gender }) {
@@ -155,9 +159,9 @@
   {% else %}
   <div class="login_after">
     '{{ name }}님' 안녕하세요!
-    <button onclick="" type="button" class="btn btn-warning">내정보</button>
-    <button onclick="log_out()" type="button" class="btn btn-primary">로그아웃</button>
-    <button onclick="" type="button" class="btn btn-primary">친구찾기</button>
+    <button onclick="update()" type="button" class="btn btn-warning">내정보</button>
+    <button onclick="log_out()" type="button" class="btn btn-dark">로그아웃</button>
+    <button onclick="find_friends()" type="button" class="btn btn-primary">친구찾기</button>
   </div>
   {% endif %}
   <div onclick="show_main()" class="logo kanit-semibold">
