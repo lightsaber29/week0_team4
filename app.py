@@ -212,8 +212,112 @@ def regist():
 @app.route('/api/regist-user', methods=['POST'])
 def regist_user():
    new_user = request.form.to_dict()
-   db.user.insert_one(new_user)
-   return jsonify({'result': 'success', 'msg': '등록 완료!'})
+   name = new_user.get('name')
+   user = db.user.find_one({ 'name':name }, {'_id':False})
+   
+   # 가입 여부 확인: 이름으로 조회 후 user_id 값 존재 여부로 판단
+   if user is None:
+      print('정글러가 아니야')
+      # 정글러가 아니면 가입 불가
+      return jsonify({'result': 'error', 'msg': '9기 정글러만 가입하실 수 있습니다.'})
+
+   elif user.get('user_id') is None:
+      print('가입하지 않은 정글러')
+      # 이름이 같은지 체크하고
+      # 같은 이름이 있으면 해당 값에 update
+      target = { "name" : name }
+      value = {
+         "user_id": new_user.get('user_id'),
+         "user_pw": new_user.get('user_pw'),
+         "gender": new_user.get('gender'),
+         "mbti1": new_user.get('mbti1'),
+         "mbti2": new_user.get('mbti2'),
+         "mbti3": new_user.get('mbti3'),
+         "mbti4": new_user.get('mbti4'),
+         "hobby": new_user.get('hobby'),
+         "age": new_user.get('age'),
+         "meal": new_user.get('meal'),
+         "exercise": new_user.get('exercise'),
+         "laptop": new_user.get('laptop'),
+         "coffee": new_user.get('coffee'),
+         "breakfast": new_user.get('breakfast'),
+         "drink": int(new_user.get('drink'))
+      }
+      db.user.update_one(target, { '$set' : value })
+
+   else:
+      print('이미 가입한 정글러')
+      # 가입이 된 사람이 가입하면
+      # 이미 가입하셨습니다 하고 튕겨내기
+      return jsonify({'result': 'error', 'msg': '이미 가입하셨습니다.'})
+
+   return jsonify({'result': 'success', 'msg': '회원가입이 완료되었습니다. 로그인 해 주세요.'})
+
+@app.route('/update')
+def update():
+   # 로그인 한 유져 정보를 가져와서
+   jwt = convert_cookie_2_jwt(request.cookies)
+   print(jwt)
+   if jwt is None:
+      return unauthorized_response()
+   
+   user_id = jwt['user_id']
+   # 해당 유저 정보를 조회하고
+   user = db.user.find_one({'user_id':user_id}, {'_id':False})
+
+   # 조회한 정보 보내주기
+   return render_template('update.html', user=user)
+
+@app.route('/api/update-user', methods=['POST'])
+def update_user():
+   new_user = request.form.to_dict()
+   print('new_user: ', new_user)
+   print('user_id: ', new_user.get('user_id'))
+
+   target = { "user_id" : new_user.get('user_id') }
+   value = {
+      "name": new_user.get('name'),
+      "gender": new_user.get('gender'),
+      "mbti1": new_user.get('mbti1'),
+      "mbti2": new_user.get('mbti2'),
+      "mbti3": new_user.get('mbti3'),
+      "mbti4": new_user.get('mbti4'),
+      "hobby": new_user.get('hobby'),
+      "age": new_user.get('age'),
+      "meal": new_user.get('meal'),
+      "exercise": new_user.get('exercise'),
+      "laptop": new_user.get('laptop'),
+      "coffee": new_user.get('coffee'),
+      "breakfast": new_user.get('breakfast'),
+      "drink": int(new_user.get('drink'))
+   }
+
+   db.user.update_one(target, { '$set' : value })
+   return jsonify({'result': 'success', 'msg': '수정되었습니다.'})
+
+@app.route('/api/update-password', methods=['POST'])
+def update_password():
+   past_pw = request.form['past_user_pw']
+   new_pw = request.form['new_user_pw']
+
+   # 유저정보 가져와서 조회
+   jwt = convert_cookie_2_jwt(request.cookies)
+   print(jwt)
+   if jwt is None:
+      return unauthorized_response()
+   
+   user_id = jwt['user_id']
+   user = db.user.find_one({'user_id':user_id}, {'_id':False})
+
+   # 현재비밀번호 일치 여부 검증
+   if user['user_pw'] == past_pw:
+      target = { "user_id" : user_id }
+      value = { "user_pw": new_pw }
+      db.user.update_one(target, { '$set' : value })
+   else:
+      return jsonify({'result': 'error', 'msg': '현재 비밀번호가 일치하지 않습니다.'})
+
+   return jsonify({'result': 'success', 'msg': '수정되었습니다.'})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
