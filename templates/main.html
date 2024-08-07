@@ -65,25 +65,10 @@
       window.location.href = "/regist"
     }
 
-    function show_users() {
-      $('#cards_box').empty();
-      $.ajax({
-        type: "GET",
-        url: "/list",
-        data: {},
-        success: function (response) {
-          let users = response["users"]
-          for (let i = 0; i < users.length; i++) {
-            let user = users[i]
-
-            // make_card(user.url, user.name, user.mbti1, user.age, user.gender)
-            make_card(user)
-          }
-
-
-        }
-      })
+    function log_out() {
+      window.location.href = "/main/logout"
     }
+
 
 
     function make_card({ _id, url, name, mbti1, mbti2, mbti3, mbti4, age, gender }) {
@@ -133,7 +118,8 @@
 </head>
 
 <body>
-  <div class="login_before">
+  {% if not name %}
+  <div class="login_before" >
     <button onclick="show_join()" type="button" class="btn btn-secondary">회원가입</button>
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#login_modal">로그인</button>
     <div class="modal fade" id="login_modal" tabindex="-1" data-backdrop="static" data-keyboard="false"
@@ -165,12 +151,16 @@
       </div>
     </div>
   </div>
+  
+  {% else %}
   <div class="login_after">
     '{{ name }}님' 안녕하세요!
-    <button type="button" class="btn btn-warning">내정보</button>
-    <button type="button" class="btn btn-primary">친구찾기</button>
+    <button onclick="" type="button" class="btn btn-warning">내정보</button>
+    <button onclick="log_out()" type="button" class="btn btn-primary">로그아웃</button>
+    <button onclick="" type="button" class="btn btn-primary">친구찾기</button>
   </div>
-  <div onclick="show_users()" class="logo kanit-semibold">
+  {% endif %}
+  <div onclick="show_main()" class="logo kanit-semibold">
     Jun9leBook
   </div>
   <div class="container">

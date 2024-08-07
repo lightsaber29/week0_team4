@@ -143,6 +143,16 @@ def go_main_if_nologin():
    response.delete_cookie('expires')
    return response
 
+@app.route('/main/logout')
+def go_main_if_logout():
+   all_users = list(db.user.find({}))
+   all_users = convert_user_list(all_users)
+
+   response = make_response(render_template('main.html', users=all_users))
+   response.delete_cookie('jwt')
+   response.delete_cookie('expires')
+   return response
+
 # {'_id': ObjectId('66b207e0c8083c31d4b0d629'), 'name': '최수빈', 'user_id': 'lightsaber29', 'user_pw': '1234', 'gender': 'F', 'mbti1': 'E', 'mbti2': 'N', 'mbti3': 'F', 'mbti4': 'J', 'hobby': 'etc', 'age': '27~29', 'meal': 'goout', 'exercise': 'no', 'laptop': 'apple', 'coffee': 'americano', 'breakfast': 'Y', 'drink': 0, 'url': '../static/img/no_user.jpg'}
 
 if __name__ == '__main__':
