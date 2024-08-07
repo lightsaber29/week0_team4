@@ -25,5 +25,16 @@ def home():
 def go_user_tetail(id):
    return render_template('detail.html')
 
+@app.route('/regist')
+def regist():
+   return render_template('regist.html')
+
+@app.route('/api/regist-user', methods=['POST'])
+def regist_user():
+   new_user = request.form.to_dict()
+   db.user.insert_one(new_user)
+   return jsonify({'result': 'success', 'msg': '등록 완료!'})
+
+
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)

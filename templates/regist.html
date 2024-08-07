@@ -14,9 +14,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
@@ -35,27 +33,27 @@
         </div>
 
         <div class="profile-data">
-            <div>
+            <div class="input_user_id">
                 <label for="user_id">ID</label>
-                <input class="form-control is-invalid" id="user_id" type="text" placeholder="아이디를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
+                <input class="form-control" id="user_id" type="text" placeholder="아이디를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
                 <div class="invalid-feedback" data-sb-feedback="name:required">ID는 필수값입니다.</div>
             </div>
 
-            <div>
+            <div class="input_user_pw">
                 <label for="user_pw">PW</label>
-                <input class="form-control is-invalid" id="user_pw" type="text" placeholder="비밀번호를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
+                <input class="form-control" id="user_pw" type="password" placeholder="비밀번호를 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
                 <div class="invalid-feedback" data-sb-feedback="name:required">PW는 필수값입니다.</div>
             </div>
 
-            <div>
+            <div class="input_ckeck_user_pw">
                 <label for="ckeck_user_pw">PW 확인</label>
-                <input class="form-control is-invalid" id="ckeck_user_pw" type="text" placeholder="비밀번호를 확인 해 주세요." data-sb-validations="required" data-sb-can-submit="no">
+                <input class="form-control" id="ckeck_user_pw" type="password" placeholder="비밀번호를 확인 해 주세요." data-sb-validations="required" data-sb-can-submit="no">
                 <div class="invalid-feedback" data-sb-feedback="name:required">동일한 비밀번호를 입력해주세요.</div>
             </div>
 
-            <div>
+            <div class="input_name">
                 <label for="name">이름</label>
-                <input class="form-control is-invalid" id="name" type="text" placeholder="이름을 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
+                <input class="form-control" id="name" type="text" placeholder="이름을 입력하세요." data-sb-validations="required" data-sb-can-submit="no">
                 <div class="invalid-feedback" data-sb-feedback="name:required">이름은 필수값입니다.</div>
             </div>
         </div>
@@ -65,13 +63,13 @@
     <div class="question-item">
         <h5>성별</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="male" checked>
+            <input class="form-check-input" type="radio" name="gender" id="male" value="M">
             <label class="form-check-label" for="male">
                 남자
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="female">
+            <input class="form-check-input" type="radio" name="gender" id="female" value="F">
             <label class="form-check-label" for="female">
                 여자
             </label>
@@ -82,29 +80,29 @@
     <div class="question-item">
         <h5>MBTI</h5>
         <div>
-            <input type="radio" class="btn-check" name="mbti1" id="mbti_e" autocomplete="off">
+            <input type="radio" class="btn-check" name="mbti1" id="mbti_e" value="E" autocomplete="off">
             <label class="btn" for="mbti_e">E</label>
 
-            <input type="radio" class="btn-check" name="mbti2" id="mbti_s" autocomplete="off">
+            <input type="radio" class="btn-check" name="mbti2" id="mbti_s" value="S" autocomplete="off">
             <label class="btn" for="mbti_s">S</label>
 
-            <input type="radio" class="btn-check" name="mbti3" id="mbti_t" autocomplete="off">
+            <input type="radio" class="btn-check" name="mbti3" id="mbti_t" value="T" autocomplete="off">
             <label class="btn" for="mbti_t">T</label>
 
-            <input type="radio" class="btn-check" name="mbti4" id="mbti_p" autocomplete="off">
+            <input type="radio" class="btn-check" name="mbti4" id="mbti_p" value="P" autocomplete="off">
             <label class="btn" for="mbti_p">P</label>
         </div>
         <div>
-            <input type="radio" class="btn-check" name="mbti1" id="mbti_i" autocomplete="off">
+            <input type="radio" class="btn-check" name="mbti1" id="mbti_i" value="I" autocomplete="off">
             <label class="btn" for="mbti_i">I</label>
 
-            <input type="radio" class="btn-check" name="mbti2" id="mbti_n" autocomplete="off">
+            <input type="radio" class="btn-check" name="mbti2" id="mbti_n" value="S" autocomplete="off">
             <label class="btn" for="mbti_n">N</label>
 
-            <input type="radio" class="btn-check" name="mbti3" id="mbti_f" autocomplete="off">
+            <input type="radio" class="btn-check" name="mbti3" id="mbti_f" value="T" autocomplete="off">
             <label class="btn" for="mbti_f">F</label>
 
-            <input type="radio" class="btn-check" name="mbti4" id="mbti_j" autocomplete="off">
+            <input type="radio" class="btn-check" name="mbti4" id="mbti_j" value="P" autocomplete="off">
             <label class="btn" for="mbti_j">J</label>
         </div>
     </div>
@@ -112,31 +110,31 @@
     <div class="question-item">
         <h5>취미</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="hobby" id="hobby_game" checked>
+            <input class="form-check-input" type="radio" name="hobby" id="hobby_game" value="game">
             <label class="form-check-label" for="hobby_game">
                 게임
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="hobby" id="hobby_webtoon">
+            <input class="form-check-input" type="radio" name="hobby" id="hobby_webtoon" value="webtoon">
             <label class="form-check-label" for="hobby_webtoon">
                 웹툰
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="hobby" id="hobby_exercise">
+            <input class="form-check-input" type="radio" name="hobby" id="hobby_exercise" value="exercise">
             <label class="form-check-label" for="hobby_exercise">
                 운동
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="hobby" id="hobby_play">
+            <input class="form-check-input" type="radio" name="hobby" id="hobby_play" value="play">
             <label class="form-check-label" for="hobby_play">
                 악기연주
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="hobby" id="hobby_etc">
+            <input class="form-check-input" type="radio" name="hobby" id="hobby_etc" value="etc">
             <label class="form-check-label" for="hobby_etc">
                 기타
             </label>
@@ -147,25 +145,25 @@
     <div class="question-item">
         <h5>나이대 (만 나이)</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="age" id="age1" checked>
+            <input class="form-check-input" type="radio" name="age" id="age1" value="~23">
             <label class="form-check-label" for="hobby_game">
                 20대 초반 ( ~ 23세)
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="age" id="age2">
+            <input class="form-check-input" type="radio" name="age" id="age2" value="24~26">
             <label class="form-check-label" for="age2">
                 20대 중반 (24 ~ 26)
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="age" id="age3">
+            <input class="form-check-input" type="radio" name="age" id="age3" value="27~29">
             <label class="form-check-label" for="age3">
                 20대 후반 (27 ~ 29)
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="age" id="age4">
+            <input class="form-check-input" type="radio" name="age" id="age4" value="30~">
             <label class="form-check-label" for="age4">
                 30대
             </label>
@@ -176,13 +174,13 @@
     <div class="question-item">
         <h5>밥은</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="meal" id="meal_school" checked>
+            <input class="form-check-input" type="radio" name="meal" id="meal_school" value="school">
             <label class="form-check-label" for="meal_school">
                 학식이 좋아요
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="meal" id="meal_goout">
+            <input class="form-check-input" type="radio" name="meal" id="meal_goout" value="goout">
             <label class="form-check-label" for="meal_goout">
                 외식이 좋아요
             </label>
@@ -193,31 +191,31 @@
     <div class="question-item">
         <h5>운동 스타일</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exercise" id="exercise_running" checked>
+            <input class="form-check-input" type="radio" name="exercise" id="exercise_running" value="running">
             <label class="form-check-label" for="exercise_running">
                 러닝
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exercise" id="exercise_gogym">
+            <input class="form-check-input" type="radio" name="exercise" id="exercise_gogym" value="gogym">
             <label class="form-check-label" for="exercise_gogym">
                 헬스
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exercise" id="exercise_cycling">
+            <input class="form-check-input" type="radio" name="exercise" id="exercise_cycling" value="cycling">
             <label class="form-check-label" for="exercise_cycling">
                 사이클
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exercise" id="exercise_yoga">
+            <input class="form-check-input" type="radio" name="exercise" id="exercise_yoga" value="yoga">
             <label class="form-check-label" for="exercise_yoga">
                 요가
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exercise" id="exercise_no">
+            <input class="form-check-input" type="radio" name="exercise" id="exercise_no" value="no">
             <label class="form-check-label" for="exercise_no">
                 운동 싫어요
             </label>
@@ -228,25 +226,25 @@
     <div class="question-item">
         <h5>사용하는 노트북 제조사</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="laptop" id="laptop_samsumg" checked>
+            <input class="form-check-input" type="radio" name="laptop" id="laptop_samsumg" value="samsumg">
             <label class="form-check-label" for="laptop_samsumg">
                 삼성
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="laptop" id="laptop_lg">
+            <input class="form-check-input" type="radio" name="laptop" id="laptop_lg" value="lg">
             <label class="form-check-label" for="laptop_lg">
                 LG (그램 등)
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="laptop" id="laptop_apple">
+            <input class="form-check-input" type="radio" name="laptop" id="laptop_apple" value="apple">
             <label class="form-check-label" for="laptop_apple">
                 Apple (mac)
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="laptop" id="laptop_etc">
+            <input class="form-check-input" type="radio" name="laptop" id="laptop_etc" value="etc">
             <label class="form-check-label" for="laptop_etc">
                 기타
             </label>
@@ -257,37 +255,37 @@
     <div class="question-item">
         <h5>커피 취향</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="coffee" id="coffee_americano" checked>
+            <input class="form-check-input" type="radio" name="coffee" id="coffee_americano" value="americano">
             <label class="form-check-label" for="coffee_americano">
                 아메리카노
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="coffee" id="coffee_latte">
+            <input class="form-check-input" type="radio" name="coffee" id="coffee_latte" value="latte">
             <label class="form-check-label" for="coffee_latte">
                 라떼
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="coffee" id="coffee_ade">
+            <input class="form-check-input" type="radio" name="coffee" id="coffee_ade" value="ade">
             <label class="form-check-label" for="coffee_ade">
                 에이드
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="coffee" id="coffee_frappe">
+            <input class="form-check-input" type="radio" name="coffee" id="coffee_frappe" value="frappe">
             <label class="form-check-label" for="coffee_frappe">
                 프라페(프라푸치노, 블렌디드)
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="coffee" id="coffee_tea">
+            <input class="form-check-input" type="radio" name="coffee" id="coffee_tea" value="tea">
             <label class="form-check-label" for="coffee_tea">
                 차
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="coffee" id="coffee_etc">
+            <input class="form-check-input" type="radio" name="coffee" id="coffee_etc" value="etc">
             <label class="form-check-label" for="coffee_etc">
                 기타
             </label>
@@ -298,13 +296,13 @@
     <div class="question-item">
         <h5>아침식사</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="breakfast" id="breakfast_y" checked>
+            <input class="form-check-input" type="radio" name="breakfast" id="breakfast_y" value="Y">
             <label class="form-check-label" for="breakfast_y">
                 꼭 먹어요
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="breakfast" id="breakfast_n">
+            <input class="form-check-input" type="radio" name="breakfast" id="breakfast_n" value="N">
             <label class="form-check-label" for="breakfast_n">
                 안 먹어요
             </label>
@@ -315,25 +313,25 @@
     <div class="question-item">
         <h5>주량</h5>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="drink" id="drink1" checked>
+            <input class="form-check-input" type="radio" name="drink" id="drink1" value=0>
             <label class="form-check-label" for="drink1">
                 반 병 이하
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="drink" id="drink2">
+            <input class="form-check-input" type="radio" name="drink" id="drink2" value=1>
             <label class="form-check-label" for="drink2">
                 한 병
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="drink" id="drink3">
+            <input class="form-check-input" type="radio" name="drink" id="drink3" value=2>
             <label class="form-check-label" for="drink3">
                 두 병
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="drink" id="drink4">
+            <input class="form-check-input" type="radio" name="drink" id="drink4" value=3>
             <label class="form-check-label" for="drink4">
                 두 병 이상
             </label>
@@ -349,17 +347,224 @@
         3. 보유 및 이용기간 : 탈퇴 시 삭제<br>
     </div>
     <div class="form-check question-item">
-        <input class="form-check-input" type="checkbox" value="" id="agree">
+        <input class="form-check-input" type="checkbox" value="Y" id="agree">
         <label class="form-check-label" for="agree">
             개인정보 제공에 동의합니다
         </label>
     </div>
 
     <div class="button-bottom">
-        <button type="button" class="btn btn-primary">가입하기</button>
+        <button type="button" class="btn btn-primary" onclick="validation()">가입하기</button>
         <button type="button" class="btn btn-dark">취소</button>
     </div>
 </body>
+
+<script>
+    $(document).ready(function() {
+        console.log('regist')
+        // for develop
+        $('#name').val('최수빈')
+        $('#user_id').val('supsup')
+        $('#user_pw').val('password')
+        $('#ckeck_user_pw').val('password')
+        $('#male').prop("checked", true)
+        $('#mbti_e').prop("checked", true)
+        $('#mbti_s').prop("checked", true)
+        $('#mbti_t').prop("checked", true)
+        $('#mbti_p').prop("checked", true)
+        $('#hobby_exercise').prop("checked", true)
+        $('#age1').prop("checked", true)
+        $('#meal_school').prop("checked", true)
+        $('#exercise_running').prop("checked", true)
+        $('#laptop_samsumg').prop("checked", true)
+        $('#coffee_americano').prop("checked", true)
+        $('#breakfast_y').prop("checked", true)
+        $('#drink1').prop("checked", true)
+        $('#agree').prop("checked", true)
+    })
+
+    function validation() {
+        const name = $('#name').val()
+        const user_id = $('#user_id').val()
+        const user_pw = $('#user_pw').val()
+        const ckeck_user_pw = $('#ckeck_user_pw').val()
+        const gender = $('input:radio[name="gender"]:checked').val()
+        const mbti1 = $('input:radio[name="mbti1"]:checked').val()
+        const mbti2 = $('input:radio[name="mbti2"]:checked').val()
+        const mbti3 = $('input:radio[name="mbti3"]:checked').val()
+        const mbti4 = $('input:radio[name="mbti4"]:checked').val()
+        const hobby = $('input:radio[name="hobby"]:checked').val()
+        const age = $('input:radio[name="age"]:checked').val()
+        const meal = $('input:radio[name="meal"]:checked').val()
+        const exercise = $('input:radio[name="exercise"]:checked').val()
+        const laptop = $('input:radio[name="laptop"]:checked').val()
+        const coffee = $('input:radio[name="coffee"]:checked').val()
+        const breakfast = $('input:radio[name="breakfast"]:checked').val()
+        const drink = $('input:radio[name="drink"]:checked').val()
+        const agree = $('#agree').is(":checked")
+
+        if (!user_id) {
+            alert('ID을 입력해주세요.')
+            $('.input_user_id div').addClass('d-block')
+            $('.input_user_id input').addClass('is-invalid')
+            $('.input_user_id input').focus()
+            $('.input_user_id input').offset()
+            return
+        } else {
+            $('.input_user_id div').removeClass('d-block')
+            $('.input_user_id input').removeClass('is-invalid')
+        }
+
+        if (!user_pw) {
+            alert('비밀번호를 입력해주세요.')
+            $('.input_user_pw div').addClass('d-block')
+            $('.input_user_pw input').addClass('is-invalid')
+            $('.input_user_pw input').focus()
+            $('.input_user_pw input').offset()
+            return
+        } else {
+            $('.input_user_pw div').removeClass('d-block')
+            $('.input_user_pw input').removeClass('is-invalid')
+        }
+
+        if (!ckeck_user_pw) {
+            alert('비밀번호를 다시 입력해주세요.')
+            $('.input_ckeck_user_pw div').addClass('d-block')
+            $('.input_ckeck_user_pw input').addClass('is-invalid')
+            $('.input_ckeck_user_pw input').focus()
+            $('.input_ckeck_user_pw input').offset()
+            return
+        } else {
+            $('.input_ckeck_user_pw div').removeClass('d-block')
+            $('.input_ckeck_user_pw input').removeClass('is-invalid')
+        }
+
+        if (user_pw != ckeck_user_pw) {
+            alert('입력하신 비밀번호가 일치하지 않습니다.')
+            $('.input_ckeck_user_pw div').addClass('d-block')
+            $('.input_ckeck_user_pw input').addClass('is-invalid')
+            $('.input_ckeck_user_pw input').focus()
+            $('.input_ckeck_user_pw input').offset()
+        } else {
+            $('.input_ckeck_user_pw div').removeClass('d-block')
+            $('.input_ckeck_user_pw input').removeClass('is-invalid')
+        }
+
+        if (!name) {
+            alert('이름을 입력해주세요.')
+            $('.input_name div').addClass('d-block')
+            $('.input_name input').addClass('is-invalid')
+            $('.input_name input').focus()
+            $('.input_name input').offset()
+            return
+        } else {
+            $('.input_name div').removeClass('d-block')
+            $('.input_name input').removeClass('is-invalid')
+        }
+
+        if (!gender) {
+            alert('성별을 선택해주세요.')
+            return
+        }
+        if (!mbti1 || !mbti2 || !mbti3 || !mbti4) {
+            alert('MBTI를 전부 선택해주세요.')
+            return
+        }
+        if (!hobby) {
+            alert('취미를 선택해주세요.')
+            return
+        }
+        if (!age) {
+            alert('나이대를 선택해주세요.')
+            return
+        }
+        if (!meal) {
+            alert('좋아하는 식사 스타일을 선택해주세요.')
+            return
+        }
+        if (!exercise) {
+            alert('좋아하는 운동 스타일을 선택해주세요.')
+            return
+        }
+        if (!laptop) {
+            alert('사용하는 노트북 제조사를 선택해주세요.')
+            return
+        }
+        if (!coffee) {
+            alert('커피 취향을 선택해주세요.')
+            return
+        }
+        if (!breakfast) {
+            alert('아침식사 여부를 선택해주세요.')
+            return
+        }
+        if (!drink) {
+            alert('주량을 선택해주세요.')
+            return
+        }
+
+        if (!agree) {
+            alert('개인정보 수집 이용에 동의해주세요.')
+            return
+        }
+
+        registUser()
+    }
+
+    function registUser() {
+        // mbti 는 체크 되어있으면 그걸로 가고 아니면 안가는걸로 하기
+        // checked 찍어보고 수정 라디오에서 val 값 가져오게끔
+        const name = $('#name').val()
+        const user_id = $('#user_id').val()
+        const user_pw = $('#user_pw').val()
+        const ckeck_user_pw = $('#ckeck_user_pw').val()
+        const gender = $('input:radio[name="gender"]:checked').val()
+        const mbti1 = $('input:radio[name="mbti1"]:checked').val()
+        const mbti2 = $('input:radio[name="mbti2"]:checked').val()
+        const mbti3 = $('input:radio[name="mbti3"]:checked').val()
+        const mbti4 = $('input:radio[name="mbti4"]:checked').val()
+        const hobby = $('input:radio[name="hobby"]:checked').val()
+        const age = $('input:radio[name="age"]:checked').val()
+        const meal = $('input:radio[name="meal"]:checked').val()
+        const exercise = $('input:radio[name="exercise"]:checked').val()
+        const laptop = $('input:radio[name="laptop"]:checked').val()
+        const coffee = $('input:radio[name="coffee"]:checked').val()
+        const breakfast = $('input:radio[name="breakfast"]:checked').val()
+        const drink = Number($('input:radio[name="drink"]:checked').val())
+
+        const form = {
+            name: name,
+            user_id: user_id,
+            user_pw: user_pw,
+            ckeck_user_pw: ckeck_user_pw,
+            gender: gender,
+            mbti1: mbti1,
+            mbti2: mbti2,
+            mbti3: mbti3,
+            mbti4: mbti4,
+            hobby: hobby,
+            age: age,
+            meal: meal,
+            exercise: exercise,
+            laptop: laptop,
+            coffee: coffee,
+            breakfast: breakfast,
+            drink: drink
+        }
+
+        console.log('form result: ', form)
+
+        $.ajax({
+            type: 'POST',
+            url:  '/api/regist-user',
+            data: form,
+            success: function (response) {
+                let msg = response['msg'];
+                alert(msg);
+            }
+        });
+    }
+</script>
 
 <style>
 .profile-format {
