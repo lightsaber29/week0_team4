@@ -60,10 +60,6 @@ def home():
    all_users = convert_user_list(all_users)
    return render_template('main.html',users=all_users)
 
-@app.route('/regist')
-def regist():
-   return render_template('regist.html')
-
 @app.route('/qna/<id>')
 def go_user_tetail(id):
    print('qna in')
