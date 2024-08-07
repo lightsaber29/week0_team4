@@ -570,7 +570,7 @@
 
         // input 입력여부
         if (!past_user_pw) {
-            alert('비밀번호를 입력해주세요.')
+            alert('현재 비밀번호를 입력해주세요.')
             $('.input_past_user_pw div').addClass('d-block')
             $('.input_past_user_pw input').addClass('is-invalid')
             return
@@ -579,7 +579,7 @@
             $('.input_user_pw input').removeClass('is-invalid')
         }
         if (!new_user_pw) {
-            alert('비밀번호를 입력해주세요.')
+            alert('새 비밀번호를 입력해주세요.')
             $('.input_new_user_pw div').addClass('d-block')
             $('.input_new_user_pw input').addClass('is-invalid')
             return
@@ -588,7 +588,7 @@
             $('.input_new_user_pw input').removeClass('is-invalid')
         }
         if (!ckeck_new_user_pw) {
-            alert('비밀번호를 입력해주세요.')
+            alert('새 비밀번호를 다시 입력해주세요.')
             $('.input_ckeck_new_user_pw div').addClass('d-block')
             $('.input_ckeck_new_user_pw input').addClass('is-invalid')
             return
