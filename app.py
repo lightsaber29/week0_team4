@@ -91,15 +91,13 @@ def go_user_tetail(id):
    detail_user = db.user.find_one({'_id': ObjectId(id)})
    detail_user['_id'] = str(detail_user['_id'])
 
-   print('user_id', detail_user['user_id'])
-
    if 'user_id' not in detail_user:
       all_users = list(db.user.find({}))
       all_users = convert_user_list(all_users)
       return render_template('main.html', msg='아직 참여하지 않은 정글러입니다.',users=all_users)
    
    questions = list(db.question.find({'a_user':detail_user['user_id']}))
-   print('question len', len(questions))
+   
    for q in questions: q['_id'] = str(q['_id'])
    
    return render_template('detail.html', me=me, detail_user=detail_user, questions=questions, name=jwt['name'])
@@ -241,7 +239,7 @@ def show_friends():
 def login_user():
    user_id = request.form['ID']
    user_pw = request.form['PW']
-   print('user_pw : ', user_pw)
+   
    given_pw_enc_val = hashlib.sha256(user_pw.encode()).hexdigest()
 
    user = db.user.find_one( {'user_id':user_id }, {'_id':False})
@@ -293,7 +291,7 @@ def regist():
 @app.route('/api/regist-user', methods=['POST'])
 def regist_user():
    new_user = request.form.to_dict()
-   print('new_user pw : ',new_user['user_pw'])
+   
    name = new_user.get('name')
    user = db.user.find_one({ 'name':name }, {'_id':False})
    
@@ -383,9 +381,6 @@ def update_user():
 def update_password():
    past_pw = request.form['past_user_pw']
    new_pw = request.form['new_user_pw']
-
-   print('pw update past pw : ', past_pw)
-   print('pw update new pw : ', new_pw)
 
    past_pw_enc_val = hashlib.sha256(past_pw.encode()).hexdigest()
    new_pw_enc_val = hashlib.sha256(new_pw.encode()).hexdigest()
