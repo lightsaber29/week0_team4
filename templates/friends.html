@@ -17,6 +17,7 @@
 
   <!-- css파일 연결 -->
   <link rel="stylesheet" href="../static/css/friends.css">
+  <link rel="stylesheet" href="../static/css/main.css">
   <!-- font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,9 +26,84 @@
     rel="stylesheet">
   <!-- JavaScript -->
   <script>
+    function show_friends() {
 
-    
-    
+      $.ajax({
+        type: "POST",
+        url: "/friends",
+        data: {
+          gender: $('input[name="gender"]:checked').val() || '',
+          mbti1: $('input[name="mbti1"]:checked').val() || '',
+          mbti2: $('input[name="mbti2"]:checked').val() || '',
+          mbti3: $('input[name="mbti3"]:checked').val() || '',
+          mbti4: $('input[name="mbti4"]:checked').val() || '',
+          hobby: $('input[name="hobby"]:checked').val() || '',
+          age: $('input[name="age"]:checked').val() || '',
+          meal: $('input[name="meal"]:checked').val() || '',
+          exercise: $('input[name="exercise"]:checked').val() || '',
+          laptop: $('input[name="laptop"]:checked').val() || '',
+          coffee: $('input[name="coffee"]:checked').val() || '',
+          breakfast: $('input[name="breakfast"]:checked').val() || '',
+          drink: $('input[name="drink"]:checked').val() || ''
+        },
+        success: function (response) {
+          if (response["result"] == 'success') {
+            let friend_list = response["friends"]
+            for (let i = 0; i < friend_list.length; i++) {
+              make_card(friend_list[i]);
+            }
+
+          }
+        }
+      })
+
+
+    }
+
+    function make_card({ _id, url, name, mbti1, mbti2, mbti3, mbti4, age, gender }) {
+      const mbti = (mbti1 + mbti2 + mbti3 + mbti4) || '';
+
+      let gender_ko = "";
+      if (gender == "F") {
+        gender_ko = "여";
+      } else if (gender == "M") {
+        gender_ko = "남";
+      }
+      let age_ko = "";
+      if (age == "~23") {
+        age_ko = "20대 초반";
+      } else if (age == "24~26") {
+        age_ko = "20대 중반";
+      } else if (age == "27~29") {
+        age_ko = "20대 후반";
+      } else if (age == "30~") {
+        age_ko = "30대";
+      }
+      let url_default = "../static/img/no_user.jpg";
+      if (!url) {
+        url = url_default;
+      }
+
+      let add_card = `<div class="col mb-4">
+        <div class="card h-100">
+          <a href="/qna/${_id}">
+          <img
+            src="${url}"
+            class="card-img-top" alt="...">
+          </a>
+          <div class="card-body">
+            <h4 class="card-title" id="name">${name}</h4>
+            <span class="badge text-bg-primary" id="gender">${gender_ko}</span>
+            <span class="badge text-bg-dark" id="mbti">${mbti}</span>
+            <span class="badge text-bg-success" id="age">${age_ko}</span>
+          </div>
+        </div>
+      </div>`
+      $('#friends_list').append(add_card);
+
+    }
+
+
   </script>
 
 </head>
@@ -36,19 +112,289 @@
   <div onclick="show_users()" class="logo kanit-semibold">
     Jun9leBook
   </div>
-  <br>
-  <select class="form-select" aria-label="Default select example">
-    <option selected>취미</option>
-    <option value="1">게임</option>
-    <option value="2">웹툰</option>
-    <option value="3">운동</option>
-    <option value="4">악기</option>
-    <option value="5">그 외</option>
-  </select>
-  
-  <div id="hobby_list">
 
+  <div class="container">
+    <p style="font-weight: bold; text-align: center; font-size:30px;">특성을 선택하시면 친구를 찾을 수 있습니다.</p>
+    <div class="question-item">
+      <h5>성별</h5>
+      <div class="inline_block">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="male" value="M">
+          <label class="form-check-label" for="male">
+            남자
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="female" value="F">
+          <label class="form-check-label" for="female">
+            여자
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>MBTI</h5>
+      <div>
+        <input type="radio" class="btn-check" name="mbti1" id="mbti_e" value="E" autocomplete="off">
+        <label class="btn" for="mbti_e">E</label>
+
+        <input type="radio" class="btn-check" name="mbti2" id="mbti_s" value="S" autocomplete="off">
+        <label class="btn" for="mbti_s">S</label>
+
+        <input type="radio" class="btn-check" name="mbti3" id="mbti_t" value="T" autocomplete="off">
+        <label class="btn" for="mbti_t">T</label>
+
+        <input type="radio" class="btn-check" name="mbti4" id="mbti_p" value="P" autocomplete="off">
+        <label class="btn" for="mbti_p">P</label>
+      </div>
+      <div>
+        <input type="radio" class="btn-check" name="mbti1" id="mbti_i" value="I" autocomplete="off">
+        <label class="btn" for="mbti_i">I</label>
+
+        <input type="radio" class="btn-check" name="mbti2" id="mbti_n" value="S" autocomplete="off">
+        <label class="btn" for="mbti_n">N</label>
+
+        <input type="radio" class="btn-check" name="mbti3" id="mbti_f" value="T" autocomplete="off">
+        <label class="btn" for="mbti_f">F</label>
+
+        <input type="radio" class="btn-check" name="mbti4" id="mbti_j" value="P" autocomplete="off">
+        <label class="btn" for="mbti_j">J</label>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>취미</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="hobby" id="hobby_game" value="game">
+        <label class="form-check-label" for="hobby_game">
+          게임
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="hobby" id="hobby_webtoon" value="webtoon">
+        <label class="form-check-label" for="hobby_webtoon">
+          웹툰
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="hobby" id="hobby_exercise" value="exercise">
+        <label class="form-check-label" for="hobby_exercise">
+          운동
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="hobby" id="hobby_play" value="play">
+        <label class="form-check-label" for="hobby_play">
+          악기연주
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="hobby" id="hobby_etc" value="etc">
+        <label class="form-check-label" for="hobby_etc">
+          기타
+        </label>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>나이대 (만 나이)</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="age" id="age1" value="~23">
+        <label class="form-check-label" for="hobby_game">
+          20대 초반 ( ~ 23세)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="age" id="age2" value="24~26">
+        <label class="form-check-label" for="age2">
+          20대 중반 (24 ~ 26)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="age" id="age3" value="27~29">
+        <label class="form-check-label" for="age3">
+          20대 후반 (27 ~ 29)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="age" id="age4" value="30~">
+        <label class="form-check-label" for="age4">
+          30대
+        </label>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>밥은</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="meal" id="meal_school" value="school">
+        <label class="form-check-label" for="meal_school">
+          학식이 좋아요
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="meal" id="meal_goout" value="goout">
+        <label class="form-check-label" for="meal_goout">
+          외식이 좋아요
+        </label>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>운동 스타일</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exercise" id="exercise_running" value="running">
+        <label class="form-check-label" for="exercise_running">
+          러닝
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exercise" id="exercise_gogym" value="gogym">
+        <label class="form-check-label" for="exercise_gogym">
+          헬스
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exercise" id="exercise_cycling" value="cycling">
+        <label class="form-check-label" for="exercise_cycling">
+          사이클
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exercise" id="exercise_yoga" value="yoga">
+        <label class="form-check-label" for="exercise_yoga">
+          요가
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exercise" id="exercise_no" value="no">
+        <label class="form-check-label" for="exercise_no">
+          운동 싫어요
+        </label>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>사용하는 노트북 제조사</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="laptop" id="laptop_samsumg" value="samsumg">
+        <label class="form-check-label" for="laptop_samsumg">
+          삼성
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="laptop" id="laptop_lg" value="lg">
+        <label class="form-check-label" for="laptop_lg">
+          LG (그램 등)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="laptop" id="laptop_apple" value="apple">
+        <label class="form-check-label" for="laptop_apple">
+          Apple (mac)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="laptop" id="laptop_etc" value="etc">
+        <label class="form-check-label" for="laptop_etc">
+          기타
+        </label>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>커피 취향</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="coffee" id="coffee_americano" value="americano">
+        <label class="form-check-label" for="coffee_americano">
+          아메리카노
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="coffee" id="coffee_latte" value="latte">
+        <label class="form-check-label" for="coffee_latte">
+          라떼
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="coffee" id="coffee_ade" value="ade">
+        <label class="form-check-label" for="coffee_ade">
+          에이드
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="coffee" id="coffee_frappe" value="frappe">
+        <label class="form-check-label" for="coffee_frappe">
+          프라페(프라푸치노, 블렌디드)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="coffee" id="coffee_tea" value="tea">
+        <label class="form-check-label" for="coffee_tea">
+          차
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="coffee" id="coffee_etc" value="etc">
+        <label class="form-check-label" for="coffee_etc">
+          기타
+        </label>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>아침식사</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="breakfast" id="breakfast_y" value="Y">
+        <label class="form-check-label" for="breakfast_y">
+          꼭 먹어요
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="breakfast" id="breakfast_n" value="N">
+        <label class="form-check-label" for="breakfast_n">
+          안 먹어요
+        </label>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <h5>주량(소주기준)</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="drink" id="drink1" value=0>
+        <label class="form-check-label" for="drink1">
+          반 병 이하
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="drink" id="drink2" value=1>
+        <label class="form-check-label" for="drink2">
+          한 병
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="drink" id="drink3" value=2>
+        <label class="form-check-label" for="drink3">
+          두 병
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="drink" id="drink4" value=3>
+        <label class="form-check-label" for="drink4">
+          두 병 이상
+        </label>
+      </div>
+    </div>
+    <div class="find_btn">
+      <button onclick="show_friends()" type="button" class="btn btn-success">친구 찾기</button>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="friends_list">
+
+    </div>
   </div>
+
+
 </body>
 
 </html>
