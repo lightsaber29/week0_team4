@@ -66,6 +66,20 @@ def home():
    all_users = convert_user_list(all_users)
    return render_template('main.html',users=all_users, name=name)
 
+@app.route('/qna', methods=['POST'])
+def create_question():
+   jwt = convert_cookie_2_jwt(request.cookies)
+   if jwt is None:
+      return unauthorized_response()
+   
+   data = request.form.to_dict()
+   data['q_user'] = jwt['user_id']
+   data['q_name'] = jwt['name']
+
+   db.question.insert_one(data)
+
+   return jsonify({'result':'success'})
+
 @app.route('/qna/<id>', methods=['GET'])
 def go_user_tetail(id):
    jwt = convert_cookie_2_jwt(request.cookies)
@@ -102,12 +116,13 @@ def delete_qna(q_id):
 @app.route('/qna/<q_id>', methods=['PUT'])
 def modify_qna(q_id):
    question = request.form['question']
+   anonymous = request.form['anonymous']
 
    q = db.question.find_one({'_id':ObjectId(q_id)})
    if 'answer' in q :
       return jsonify({'result':'answered'})
    
-   db.question.update_one({'_id':ObjectId(q_id)}, {'$set':{'question': question}})
+   db.question.update_one({'_id':ObjectId(q_id)}, {'$set':{'question': question, 'anonymous':anonymous}})
    return jsonify({'result':'success'})
 
 @app.route('/qna/answer/<q_id>',methods=['POST'])
