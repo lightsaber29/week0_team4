@@ -60,10 +60,6 @@ def home():
    all_users = convert_user_list(all_users)
    return render_template('main.html',users=all_users)
 
-@app.route('/regist')
-def regist():
-   return render_template('regist.html')
-
 @app.route('/qna/<id>')
 def go_user_tetail(id):
    print('qna in')
@@ -154,6 +150,16 @@ def go_main_if_logout():
    return response
 
 # {'_id': ObjectId('66b207e0c8083c31d4b0d629'), 'name': '최수빈', 'user_id': 'lightsaber29', 'user_pw': '1234', 'gender': 'F', 'mbti1': 'E', 'mbti2': 'N', 'mbti3': 'F', 'mbti4': 'J', 'hobby': 'etc', 'age': '27~29', 'meal': 'goout', 'exercise': 'no', 'laptop': 'apple', 'coffee': 'americano', 'breakfast': 'Y', 'drink': 0, 'url': '../static/img/no_user.jpg'}
+
+@app.route('/regist')
+def regist():
+   return render_template('regist.html')
+
+@app.route('/api/regist-user', methods=['POST'])
+def regist_user():
+   new_user = request.form.to_dict()
+   db.user.insert_one(new_user)
+   return jsonify({'result': 'success', 'msg': '등록 완료!'})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
