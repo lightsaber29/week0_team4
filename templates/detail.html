@@ -431,8 +431,8 @@
                     <div class="card-body">
                         <h5 class="card-title">
                             {{ question.question }}
-                            <h6><span class="badge text-bg-secondary">{{ '익명' if question.anonymous == 'Y' else
-                                    question.q_name}}</span></h6>
+                            <span class="badge text-bg-secondary">{{ '익명' if question.anonymous == 'Y' else
+                                question.q_name}}</span>
                         </h5>
                         <p>{{ question.answer }}</p>
                     </div>

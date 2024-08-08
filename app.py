@@ -278,7 +278,7 @@ def go_main_if_logout():
    all_users = list(db.user.find({}))
    all_users = convert_user_list(all_users)
 
-   response = make_response(render_template('main.html', users=all_users))
+   response = make_response(redirect('/'))
    response.delete_cookie('jwt')
    response.delete_cookie('expires')
    return response
