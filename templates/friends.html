@@ -103,7 +103,26 @@
 
     }
 
+    $(document).ready(function () {
+      const before_checked = {}
+      function remove_check(event) {
+        const tag = event.target
+        tag.checked = !before_checked[tag.id]
+        before_checked[tag.id] = tag.checked
 
+        const same_name_list = [...document.querySelectorAll(`input[name="${tag.name}"]`)].filter(input => input.id != tag.id);
+        same_name_list.forEach(input => before_checked[input.id] = false)
+      }
+
+      [...document.querySelectorAll('.btn-check')].forEach(input => {
+        input.addEventListener('click', remove_check)
+      });
+
+      [...document.querySelectorAll('.form-check input[type="radio"]')].forEach(input => {
+        input.addEventListener('click', remove_check)
+      })
+
+    })
   </script>
 
 </head>
@@ -199,7 +218,7 @@
       <h5>나이대 (만 나이)</h5>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="age" id="age1" value="~23">
-        <label class="form-check-label" for="hobby_game">
+        <label class="form-check-label" for="age1">
           20대 초반 ( ~ 23세)
         </label>
       </div>
