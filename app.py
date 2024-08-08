@@ -250,8 +250,8 @@ def login_user():
       expire_time = datetime.now() + timedelta(hours=24)
       max_age = 60 * 60 * 24
 
-      response.set_cookie('jwt', jwt_token, httponly=True, samesite='Strict', max_age=max_age, secure=True)
-      response.set_cookie('expires', str(expire_time), httponly=True, samesite='Strict', max_age=max_age, secure=True)
+      response.set_cookie('jwt', jwt_token, httponly=True, samesite='Strict', max_age=max_age)
+      response.set_cookie('expires', str(expire_time), httponly=True, samesite='Strict', max_age=max_age)
       return response
    else:
       return jsonify({'result': 'fail'})
